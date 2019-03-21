@@ -102,11 +102,13 @@ int adp01_3_main() {
 		mb.print();
 
 		Matrix<int> mc(2, 1);
+		long long z = ma.getInstructionCounter();
 		ma.mult(mb, mc);
+		z = ma.getInstructionCounter() - z; 
+		printf("Instructions: %i \n", z); 
 
 		printf("Ausgabe Matrix C = AB (2x1): \n");
 		mc.print();
-
 
 		ma.mult(mc, mb);
 		return 0;

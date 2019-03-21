@@ -7,6 +7,7 @@
 template <typename T>
 class Matrix {
 private:
+	static long long instructioncounter; 
 	const int ZEILEN, SPALTEN;
 	T * data;
 
@@ -21,7 +22,12 @@ public:
 	Matrix<T> & mult(const Matrix<T> & factor, Matrix<T> & result); 
 	Matrix<T> & operator+= (const Matrix<T> & that); 
 	Matrix<T> operator+ (const Matrix<T> & that); 
-};
+	long long getInstructionCounter() { return instructioncounter; }
+}; //end class
+
+
+template <typename T>
+long long Matrix<T>::instructioncounter = 0; 
 
 template <typename T>
 Matrix<T>::Matrix<T>(int zeilen, int spalten) : ZEILEN(zeilen), SPALTEN(spalten) {
@@ -75,6 +81,7 @@ Matrix<T> & Matrix<T>::input() {
 
 template <typename T>
 Matrix<T> & Matrix<T>::operator+=(const Matrix<T> & that) {
+	Matrix<T>::instructioncounter++;
 	if ((this->ZEILEN != that.ZEILEN) || (this->SPALTEN != that.SPALTEN)) {
 		std::ostringstream errortext; 
 		errortext << "arithmetic exception: cannot add two different sized matrizes. (" 
@@ -82,10 +89,16 @@ Matrix<T> & Matrix<T>::operator+=(const Matrix<T> & that) {
 			<< that.ZEILEN << " x " << that.SPALTEN << ") failed.";
 		throw std::exception(errortext.str().c_str());
 	}
+
+	Matrix<T>::instructioncounter++;
 	int size = this->ZEILEN * this->SPALTEN; 
+	Matrix<T>::instructioncounter++;
 	for (int i = 0; i < size; i++) {
+	  Matrix<T>::instructioncounter++;
 		this->data[i] += that.data[i]; 
+	  Matrix<T>::instructioncounter++;
 	}
+	Matrix<T>::instructioncounter++;
 	return *this;
 }
 
@@ -99,6 +112,7 @@ Matrix<T> Matrix<T>::operator+(const Matrix<T> & that) {
 
 template <typename T>
 Matrix<T> & Matrix<T>::mult(const Matrix<T> & factor, Matrix<T> & result) {
+	Matrix<T>::instructioncounter++;
 	if ((this->SPALTEN != factor.ZEILEN) ||
 	    (this->ZEILEN != result.ZEILEN) || 
 	    (factor.SPALTEN != result.SPALTEN)) {
@@ -109,17 +123,25 @@ Matrix<T> & Matrix<T>::mult(const Matrix<T> & factor, Matrix<T> & result) {
 			<< result.ZEILEN << " x " << result.SPALTEN << ") failed.";
 		throw std::exception(errortext.str().c_str()); 
 	}
+	Matrix<T>::instructioncounter++;
 	for (int i = 0; i < this->ZEILEN; i++) {
+	  Matrix<T>::instructioncounter++;
 		for (int j = 0; j < factor.SPALTEN; j++) {
+	    Matrix<T>::instructioncounter++;
 			T accu = 0; 
+	    Matrix<T>::instructioncounter++;
 			for (int k = 0; k < this->SPALTEN; k++) {
+	      Matrix<T>::instructioncounter++;
 				accu += this->data[i * this->SPALTEN + k] * factor.data[k * factor.SPALTEN + j]; 
+	      Matrix<T>::instructioncounter++;
 			}
+	    Matrix<T>::instructioncounter++;
 			result.data[i * factor.SPALTEN + j] = accu; 
-
+	    Matrix<T>::instructioncounter++;
 		}
 	}
 	
+  Matrix<T>::instructioncounter++;
 	return result;
 }
 
