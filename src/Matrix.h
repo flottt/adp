@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <exception>
 
 template <typename T>
 class Matrix {
@@ -16,12 +17,14 @@ public:
 	Matrix<T>(const Matrix<T> &);
 	~Matrix<T>();
 	Matrix<T> & init();
-	Matrix<T> & print();
+		Matrix<T> & print();
 	Matrix<T> & input();
 	Matrix<T> add(const Matrix<T> & that) { return *this + that; }
 	Matrix<T> & mult(const Matrix<T> & factor, Matrix<T> & result); 
 	Matrix<T> & operator+= (const Matrix<T> & that); 
 	Matrix<T> operator+ (const Matrix<T> & that); 
+	Matrix<T> & setValue(int line_startWith0, int column_startWith0, T value); 
+	T getValue(int line_startWith0, int column_startWith0); 
 	long long getInstructionCounter() { return instructioncounter; }
 }; //end class
 
@@ -30,19 +33,22 @@ template <typename T>
 long long Matrix<T>::instructioncounter = 0; 
 
 template <typename T>
-Matrix<T>::Matrix<T>(int zeilen, int spalten) : ZEILEN(zeilen), SPALTEN(spalten) {
+Matrix<T>::Matrix(int zeilen, int spalten) : ZEILEN(zeilen), SPALTEN(spalten) {
 	this->data = new T[zeilen * spalten];
+	if (this->data == nullptr) {
+		throw std::runtime_error("ERROR: OUT OF MEMORY \n"); 
+	}
 	this->init(); 
 }
 
 template <typename T>
-Matrix<T>::Matrix<T>(const Matrix<T> & that) : ZEILEN(that.ZEILEN), SPALTEN(that.SPALTEN) {
+Matrix<T>::Matrix(const Matrix<T> & that) : ZEILEN(that.ZEILEN), SPALTEN(that.SPALTEN) {
 	this->data = new T[that.ZEILEN * that.SPALTEN];
 }
 
 
 template <typename T>
-Matrix<T>::~Matrix<T>() {
+Matrix<T>::~Matrix() {
 	delete[] this->data;
 	this->data = nullptr;
 }
@@ -87,7 +93,7 @@ Matrix<T> & Matrix<T>::operator+=(const Matrix<T> & that) {
 		errortext << "arithmetic exception: cannot add two different sized matrizes. (" 
 			<< this->ZEILEN << " x " << this->SPALTEN << ") + (" 
 			<< that.ZEILEN << " x " << that.SPALTEN << ") failed.";
-		throw std::exception(errortext.str().c_str());
+		throw std::runtime_error(errortext.str().c_str());
 	}
 
 	Matrix<T>::instructioncounter++;
@@ -121,7 +127,7 @@ Matrix<T> & Matrix<T>::mult(const Matrix<T> & factor, Matrix<T> & result) {
 			<< this->ZEILEN << " x " << this->SPALTEN << ") x (" 
 			<< factor.ZEILEN << " x " << factor.SPALTEN << ") = (" 
 			<< result.ZEILEN << " x " << result.SPALTEN << ") failed.";
-		throw std::exception(errortext.str().c_str()); 
+		throw std::runtime_error(errortext.str().c_str()); 
 	}
 	Matrix<T>::instructioncounter++;
 	for (int i = 0; i < this->ZEILEN; i++) {
@@ -143,6 +149,17 @@ Matrix<T> & Matrix<T>::mult(const Matrix<T> & factor, Matrix<T> & result) {
 	
   Matrix<T>::instructioncounter++;
 	return result;
+}
+
+template <typename T>
+Matrix<T> & Matrix<T>::setValue(int zeile, int spalte, T value) {
+	this->data[zeile * this->SPALTEN + spalte] = value; 
+	return *this; 
+}
+
+template <typename T>
+T Matrix<T>::getValue(int zeile, int spalte) {
+	return this->data[zeile * this->SPALTEN + spalte]; 
 }
 
 
