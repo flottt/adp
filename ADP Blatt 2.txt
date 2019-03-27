@@ -1,0 +1,93 @@
+Aufgabe 2.1: WAHR 
+ g(n) := 17 + 22 + 45 = 84 <= 84 * 1 = 84 * f(n) 
+ also existiert c = 84 in IR+, n0 = 1 in IN so dass für alle n > n0 gilt: g(n) <= c f(n)
+
+Aufgabe 2.2: WAHR 
+ g(n) := 5n³ + 12n² + 3n + 5 >= 5n³ >= n³ =: f(n)
+ also existiert c = 1 in IR+ ...
+
+Aufgabe 2.3: FALSCH: (WAHR && FALSCH)
+
+Aufgabe 2.3.1: WAHR 
+ g(n) := 2^(n+1) = 2*2^n <= c*2^n =: c * f(n) 
+ also existiert c = 2 ...
+ 
+Aufgabe 2.3.2: FALSCH
+ g(n) := 2^(2n) = 2^n * 2^n > c * 2^n =: c * f(n), weil 2^n > c
+ also fuer alle c in IR+ gibt es ein n, ab dem 2^n nicht mehr kleiner gleich c ist. 
+
+Aufgabe 2.4: WAHR
+ log(n!) = log(1 * 2 * ... * n) = log(1) + log(2) +  ... + log(n) = Summe von i = 1 bis n von log(i) =: s
+ s <= n log n (weil wir in die Summe konstant das Maximum einsetzen) 
+  ==> log(n!) = O(n log n)
+
+ 4s = s + s + 2s (Summe einmal vorwärts, einmal rückwärts, zweimal übrig) 
+ 4s = Summe von i = 1 bis n von (log(i) + log(n - i + 1)) + 2s >= 
+ // ersetze die beiden Randterme der Summe durch die log(n) aus 2s
+    >= log(n) + Summe von i = 2 bis n-1 von (log(i) + log(n - i + 1)) + log(n) = 
+     = log(n) + Summe ...                   (log(i * (n-i+1))) + log(n)       >=   
+ // (für alle natürlichen Zahlen ab 2 gilt a*b >= a+b)
+    >= log(n) + Summe ... (log(i + (n-i+1))) + log(n) = 
+    = Summe von i = 1 bis n von (log(n)) = n log n
+  ==> log(n!) = Omega(n log n) 
+
+Aufgabe 2.5: WAHR 
+ 2^n = 2 * 2 * 2 * 2 * ... <= 2 * 2 * 3 * 4 * ... = 2 * n!
+ n! = 1 * 2 * 3 * ... * n <= n * n * n * ... * n
+
+Aufgabe 2.6: FALSCH
+Angenommen, es gäbe ein c mit 6^(-5)*n^(1,25) <= c*n^(0,5) 
+dann wäre n^(0,75) <= 6^5 * c 
+dann wäre n <= (6^5 * c)^(4/3) =: d 
+dann wäre n <= d WIDERSPRUCH 
+
+===================================================================================================
+Aufgabe 3: 
+Beweis durch vollständige Induktion nach n, dass f(n, m) wohldefiniert: 
+
+Induktionsanfang: n = 0
+ f(0, m) = m + 1
+Induktionsschritt: n -> n + 1 durch vollständige Induktion nach m bei festem n+1: 
+ Induktionsanfang: m = 0 
+   f(n + 1, 0) = f(n, 1) ist wohldefiniert nach äußerer Induktionsvoraussetzung. 
+ Induktionsschritt: m -> m + 1 
+   f(n + 1, m + 1) = f(n, y) mit y = f(n + 1, m)
+   y ist wohldefiniert nach innerer Induktionsvoraussetzung und 
+   damit ist f(n, y) wohldefiniert nach äußerer Induktionsvoraussetzung
+
+Wertetabelle zur Funktion   
+ 
+f(6, 0) = f(5, 1) ist sehr groß
+
+f(5, 1) = f(4, f(5, 0)) = f(4, 65.533) ist sehr groß
+f(5, 0) = f(4, 1) = 65.533
+
+f(4, 2) = f(3, 65.533) = 8 * 2^65.533 - 3 > 1000^6553 > 10^196k
+f(4, 1) = f(3, 13) = 8 * 2^13 - 3 = 65.533
+f(4, 0) = f(3, 1) = 13
+
+f(3, n) = 8 * 2^n - 3
+f(3, 4) = 125
+f(3, 3) = 61
+f(3, 2) = f(2, f(3, 1)) = f(2, 13) = 29
+f(3, 1) = f(2, f(3, 0)) = f(2, 5) = 13
+f(3, 0) = f(2, 1) = 5
+
+f(2, n) = f(1, f(2, n-1)) = f(2, n-1) + 2 = 2n + 3
+f(2, 2) = f(1, f(2, 1)) = f(1, 5) = 7
+f(2, 1) = f(1, f(2, 0)) = f(1, 3) = 5
+f(2, 0) = f(1, 1) = 3
+
+f(1, n) = f(0, f(1, n-1)) = f(1, n-1) + 1 = n + 2
+f(1, 2) = f(0, f(1, 1)) = f(0, 3) = 4
+f(1, 1) = f(0, f(1, 0)) = f(0, 2) = 3
+f(1, 0) = f(0, 1) = 2
+
+===================================================================================================
+Aufgabe 4: 
+x := Reihe(k^2/2^k) konvergiert nach Quotientenkriterium: 
+a_(n+1) / a_n = (n+1)^2 / 2^(n+1) / n^2 * 2^n = ((n+1)/n)^2 / 2 --> 1/2 < 1
+
+numerisches Verfahren liefert x = 6. 
+offenbar ist 6 = O(1)
+AUSSAGE IST WAHR. 

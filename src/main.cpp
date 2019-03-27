@@ -7,6 +7,11 @@ extern int adp01_3_main();
 extern int adp01_4_main(); 
 extern int adp01_5_main(); 
 
+extern int adp02_1_main(); 
+extern int adp02_3_main(); 
+extern int adp02_3it_main(); 
+
+
 int main() {
 	int eingabe = -1, returnresult = -1;
 	printf("Hauptmenue \n"); 
@@ -15,6 +20,9 @@ int main() {
 	printf("13: Blatt 1. Aufgabe 3. Matrix \n"); 
 	printf("14: Blatt 1. Aufgabe 4. grosse Matrix addieren \n");
 	printf("15: Blatt 1. Aufgabe 4. grosse Matrix multiplizieren \n");
+	printf("21: Blatt 2. Aufgabe 1. Summenberechnung \n"); 
+	printf("23: Blatt 2. Aufgabe 3. rekursive Funktion rekursiv \n"); 
+	printf("24: Blatt 2. Aufgabe 3. rekursive Funktion iterativ \n"); 
 
 	printf("Ihre Eingabe: "); 
 	scanf_s("%i", &eingabe); 
@@ -27,6 +35,9 @@ int main() {
 	case 13: returnresult = adp01_3_main(); break; 
 	case 14: returnresult = adp01_4_main(); break; 
 	case 15: returnresult = adp01_5_main(); break; 
+	case 21: returnresult = adp02_1_main(); break; 
+	case 23: returnresult = adp02_3_main(); break; 
+	case 24: returnresult = adp02_3it_main(); break; 
 
 	}
 
