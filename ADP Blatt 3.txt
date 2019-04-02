@@ -1,0 +1,86 @@
+ADP Blatt 3 Aufgabe 1: 
+Gegeben: 
+ f(n) ist n.te Fibonacci-Zahl, 
+ w5 := wurzel(5), 
+ p := (1 + w5) / 2, 
+ q := (1 - w5) / 2
+ 
+Behauptung: 
+ f(n) = (p ^ n - q ^ n) / w5 
+
+Verwende: 
+(L1): p^2 = p + 1
+  p*p = (1*1 + 2*1*w5 + w5w5) / 4 = (1 + 2w5 + 5) / 4 = (6 + 2w5) / 4 = (3 + w5) / 2 = (1 + w5) / 2 + 1 = p + 1
+(L2): q^2 = q + 1 
+  q*q = (1 - 2w5 + 5) / 4 = (1 - w5) / 2 + 1 = q + 1
+ 
+Beweis durch vollstaendige Induktion nach n 
+
+Induktionsanfang n = 1: 
+ 1 =: f(1) = (p - q) / w5 = 2 / 2 * w5 / w5 = 1 
+ ==> ok.
+ 
+Induktionsanfang n = 2: 
+ 1 =: f(2) = (p ^ 2 - q ^ 2) / w5 =  // Binomische Formeln, nur gemischte Terme überleben
+  = ( 2 * 2 * 1 * wurzel(5) / 4 ) / wurzel(5) = 1 
+  ==> ok. 
+
+Induktionsschritt n-2, n-1 --> n: 
+L.S. = f(n) =                  // Def von f
+ = f(n - 1) + f(n - 2) =       // Induktionsvoraussetzung x2
+ = (p ^ (n-1) - q ^ (n-1) + p ^ (n-2) - q ^ (n-2) ) / w5 =
+ = (p * p ^ (n-2) - q * q ^ (n-2) + p ^ (n-2) - q ^ (n-2) ) / w5 = 
+ = ((p + 1) * p ^ (n-2) - (q + 1) * q ^ (n-2)) / w5 =      // use L1 und L2 
+ = ((p ^ 2) * p ^ (n-2) - (q ^ 2) * q ^ (n-2)) / w5 = 
+ = (p ^ (2 + n - 2) - q ^ (2 + n - 2)) / w5 = 
+ = (p ^ n - q ^ n) / w5 = R.S. 
+ ==> L.S. = R.S. ==> ok. 
+ 
+ 
+Letztendlich wird bei der rekursiven Implementierung der Fibonacci-Zahlen-Berechnung nur 1+1+1+... gerechnet, 
+daher ist T(n) = f(n). 
+Theta(p^n) = Theta(p^n - q^n) = Theta((p^n - q^n) / w5)
+
+===================================================================================================
+ADP Blatt 3 Aufgabe 2: 
+T(n) = 4T(n / 2) + n = 4(4T(n/4) + n/2) + n = ... = 
+  = 4^i T(n / 2^i) + Summe_k=0_bis_i-1_von (4^k * 1/2^k * n) =    
+        //n / 2^i = 1    ===> i = lb n
+  = 4 ^ lb n T(1) + Summe_k=0 bis lb n - 1_von (2^k * n) = 
+  = n ^ 2 + n * (2^(lb n - 1 + 1)) / (2 - 1) = 
+  = n ^ 2 + n ^ 2   = Theta (n ^ 2) 
+  
+------------------  
+wn := wurzel(n)
+T(n) = 2T(n / 4) + wn = 2(2 T(n / 4^2) + wurzel(n/4) ) + wn = 
+  = 2(2 T(n / 4^2)) + wn + wn = ... = 
+  = 2 ^ i * T(n / 4^i) + i * wn =                // i = log4 (n) = 1/2 * lb n 
+  = 2 ^ (1/2 * lb n) * T(1) + 1/2 * lb n * wn = 
+  = wn + 1/2 wn * lb n   = Theta(wn * lb n)
+  
+------------------
+T(n) = 2T(n - 1 ) + n ^ 2 = 2 (2 T(n - 2) + (n - 1) ^ 2) + n ^ 2 = ... = 
+  = 2 ^ i * T(n - i) + Summe_k = 0 bis i-1 von (n-k) ^ 2 =       // i = n - 3
+  = 2 ^ (n-3) * T(3) + Summe_k = 0 bis n-4 von (n-k) ^ 2 = 
+  = Theta (2 ^ n) + Summe_j = 4 bis n von j ^ 2 = 
+  = Theta (2 ^ n) + Theta(n ^ 3) = Theta (2 ^ n)
+  
+===================================================================================================
+ADP Blatt 3 Aufgabe 3: 
+e1 = log2 (1) = 0
+2. Fall: 1 ist Theta(n^0)
+ => T(n) = Theta(n^0 log n) = Theta(log n) 
+
+ 
+----------------------------------------- 
+e2 = log4 (3) = 0,8 
+3.Fall:  n log n ist Omega(n^(0,8+)) 
+Zusatzbedingung: 3n/4 log (n/4) < c n log n 
+                 3/4 (log(n) - 2) < c log n  => c = 3/4 < 1 
+ => T(n) = Theta(n log n) 
+ 
+ 
+-----------------------------
+e3 = log2 (7) = 2,8 
+1.Fall: n^2 ist O(n^lb 7) 
+ => T(n) = Theta(n^ lb 7)  

@@ -12,6 +12,8 @@ extern int adp02_3_main();
 extern int adp02_3it_main(); 
 extern int adp02_registermaschine_main();
 
+extern int adp03_4_main();
+
 int main() {
 	int eingabe = -1, returnresult = -1;
 	printf("Hauptmenue \n"); 
@@ -26,6 +28,8 @@ int main() {
 	printf("22: Blatt 2. Aufgabe 1. Registermaschine \n"); 
 	printf("23: Blatt 2. Aufgabe 3. rekursive Funktion rekursiv \n"); 
 	printf("24: Blatt 2. Aufgabe 3. rekursive Funktion iterativ \n"); 
+
+	printf("34: Blatt 3. Aufgabe 4. Maximale Teilsumme 2D \n");
 
 	printf("Ihre Eingabe: "); 
 	scanf_s("%i", &eingabe); 
@@ -45,6 +49,7 @@ int main() {
 	case 23: returnresult = adp02_3_main(); break; 
 	case 24: returnresult = adp02_3it_main(); break; 
 
+	case 34: returnresult = adp03_4_main(); break; 
 	}
 
 	system("pause"); 
