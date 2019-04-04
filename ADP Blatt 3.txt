@@ -39,6 +39,7 @@ L.S. = f(n) =                  // Def von f
  
 Letztendlich wird bei der rekursiven Implementierung der Fibonacci-Zahlen-Berechnung nur 1+1+1+... gerechnet, 
 daher ist T(n) = f(n). 
+q^n = Theta(1), weil |q| < 1
 Theta(p^n) = Theta(p^n - q^n) = Theta((p^n - q^n) / w5)
 
 ===================================================================================================
