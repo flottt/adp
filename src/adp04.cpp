@@ -45,7 +45,7 @@ void swop(int * a, const int x1, const int x2) {
  * @param const int maxValue = 100 Der groesste erlaubte Wert. Darf auch negativ sein. Muss mindestens minValue sein. */
 void initArrayRandom(int * a, const int n, const int minValue = 0, const int maxValue = 100) {
 	int rangeValue = maxValue - minValue; 
-	std::srand(std::time(nullptr));
+	std::srand(static_cast<unsigned>(std::time(nullptr)));
 	for (int i = n - 1; i >= 0; --i) {
 		a[i] = rand() % rangeValue + minValue; 
 	}
@@ -274,6 +274,8 @@ int adp04_3_main() {
 	zeitmessung("SelectionSort", &selectionSortMax);
 	zeitmessung("QuickSort    ", &quickSort);
 	zeitmessung("MergeSort    ", &mergeSort);
+
+	return 0;
 }
 /* Results: 
 Sortiert 25000 Elemente mit BubbleSort    in   1774.4 ms.
@@ -363,10 +365,15 @@ void mergeSort(int * a, int n) {
 			band2 = band1 + bandlang; 
 			band1E = band2 - 1; 
 			band2E = band2 + bandlang - 1;
-			if (band1E > inBandE) band1E = inBandE; 
-			if (band2E > inBandE) band2E = inBandE; 
-
-			while(1) {
+			if (band2E > inBandE) {
+				band2E = inBandE;
+				if (band1E > inBandE) band1E = inBandE;
+				if (band2 > inBandE) {
+					kopiereBand(&band1, band1E, &bandOut); 
+					band2 = 0; 
+				}
+			}
+			if (band2 != 0) while(1) {
 				if (*band1 <= *band2) {
 					kopiereBand(&band1, band1, &bandOut); 
 					if (band1 > band1E) {
@@ -390,6 +397,8 @@ void mergeSort(int * a, int n) {
 			inBand = outBand; 
 			outBand = (outBand == band ? band + n : band); 
 		}
+		//std::cout << std::endl << "Zwischenergebnis: bandlang = " << bandlang << std::endl;
+		//printArray(band, 2 * n); 
 	} //next bandlang
 }
 
@@ -400,14 +409,16 @@ int adp04_4_main() {
 	for (int i = 0; i < 100; ++i) {a[i] = 255-i;}
 	mergeSort(a, 100); 
 	printArray(a, 100); 
+
+	return 0; 
 }
 
 
-
+/*
 int main() {
 //	testAufgabe2(); 
 	int returnresult = adp04_3_main(); 
   std::cout << "ende" << std::endl; 
   return returnresult; 
 
-}
+}*/

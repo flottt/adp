@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
+#include <ctime>
 
 #define ADP03DEBUG 0 
 /** druckt die Matrix auf der Console aus. 
@@ -109,7 +110,7 @@ int maxTeilSumme2D(const int * matrix, const int zeilen, const int spalten, int 
 
 /** Beispiel-main zum Starten und Testen */
 int adp03_4_main() {
-	std::srand(std::time(nullptr)); 
+	std::srand(static_cast<unsigned>(std::time(nullptr))); 
 	const int zeilen = 80, spalten = 25; 
 	int matrix[zeilen * spalten]; 
 	int borders[4]; 

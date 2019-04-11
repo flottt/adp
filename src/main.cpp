@@ -14,6 +14,9 @@ extern int adp02_registermaschine_main();
 
 extern int adp03_4_main();
 extern int adp04_1_main();
+extern int adp04_2_main();
+extern int adp04_3_main();
+extern int adp04_4_main();
 
 int main() {
 	int eingabe = -1, returnresult = -1;
@@ -33,6 +36,9 @@ int main() {
 	printf("34: Blatt 3. Aufgabe 4. Maximale Teilsumme 2D \n");
 
 	printf("41: Blatt 4. Aufgabe 1. Sortieren \n");
+	printf("42: Blatt 4. Aufgabe 2. Summenwert mit 2 aus n Zahlen suchen \n");
+	printf("43: Blatt 4. Aufgabe 3. Zeitmessung Sortieralgorithmen \n");
+	printf("44: Blatt 4. Aufgabe 4. Iteratives Mergesort \n");
 
 	printf("Ihre Eingabe: "); 
 	scanf_s("%i", &eingabe); 
@@ -55,6 +61,9 @@ int main() {
 	case 34: returnresult = adp03_4_main(); break; 
 	
 	case 41: returnresult = adp04_1_main(); break;
+	case 42: returnresult = adp04_2_main(); break;
+	case 43: returnresult = adp04_3_main(); break;
+	case 44: returnresult = adp04_4_main(); break;
 	}
 
 	system("pause"); 
