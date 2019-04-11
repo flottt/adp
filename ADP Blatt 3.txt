@@ -39,6 +39,7 @@ L.S. = f(n) =                  // Def von f
  
 Letztendlich wird bei der rekursiven Implementierung der Fibonacci-Zahlen-Berechnung nur 1+1+1+... gerechnet, 
 daher ist T(n) = f(n). 
+q^n = Theta(1), weil |q| < 1
 Theta(p^n) = Theta(p^n - q^n) = Theta((p^n - q^n) / w5)
 
 ===================================================================================================
@@ -60,10 +61,11 @@ T(n) = 2T(n / 4) + wn = 2(2 T(n / 4^2) + wurzel(n/4) ) + wn =
   
 ------------------
 T(n) = 2T(n - 1 ) + n ^ 2 = 2 (2 T(n - 2) + (n - 1) ^ 2) + n ^ 2 = ... = 
-  = 2 ^ i * T(n - i) + Summe_k = 0 bis i-1 von (n-k) ^ 2 =       // i = n - 3
-  = 2 ^ (n-3) * T(3) + Summe_k = 0 bis n-4 von (n-k) ^ 2 = 
-  = Theta (2 ^ n) + Summe_j = 4 bis n von j ^ 2 = 
-  = Theta (2 ^ n) + Theta(n ^ 3) = Theta (2 ^ n)
+  = 2 ^ i * T(n - i) + Summe_k = 0 bis i-1 von 2 ^ k * (n-k) ^ 2 =       // i = n - 3
+  = 2 ^ (n-3) * T(3) + Summe_k = 0 bis n-4 von 2 ^ k * (n-k) ^ 2 = 
+  = Theta (2 ^ n) + Summe_j = 4 bis n von 2 ^ (n - j) * j ^ 2 = 
+  = Theta (2 ^ n) + 2 ^ n * Summe_j = 4 bis n von j ^ 2 / 2 ^ j = 
+  = Theta (2 ^ n) + Theta(2 ^ n) = Theta (2 ^ n)
   
 ===================================================================================================
 ADP Blatt 3 Aufgabe 3: 
