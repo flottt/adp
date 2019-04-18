@@ -1,0 +1,128 @@
+Algorithmen und Datenstrukturen Blatt 5 Aufgabe 2 Variante 1: 
+
+Beweis durch vollständige Induktion nach n: 
+Induktionsanfang n=2: 
+ die angegebenen Werte entsprechen exakt der Definition. ==> ok
+Induktionsschritt n -> n * 2: 
+ mit Hilfe des Falk-Schemas sieht man dies leicht: 
+ für alle i=1,...,n und j=1,...,n seien 
+ i =: (n/2) * ip + ir und j =: (n/2) * jp + jr mit 0 <= ip, jp <= 1, 0 <= ir, jr <= n/2
+ (O_ip_jp)_ir_jr = o_i_j = summe(k=1...n) m_i_k n_k_j = 
+ = summe(k=1...n/2) m_i_k n_k_j + summe(k=n/2+1...n) m_i_k n_k_j = 
+ = (M_ip_1 * N_1_jp)_ir_jr + (M_ip_2 N_2_jp)_ir_jr = 
+ = (M_ip_1 * N_1_jp + M_ip_2 N_2_jp)_ir_jr
+ ==> ok
+ 
+Variante 2: 
+
+Beweis mit Hilfe von Variante 1: 
+
+ H_1 + H_4 - H_5 + H_7 = 
+  = (M_1_1 + M_2_2) * (N_1_1 + N_2_2) +
+  + M_2_2 * (N_2_1 - N_1_1) - 
+  - (M_1_1 + M_1_2) * N_2_2 + 
+  + (M_1_2 - M_2_2) * (N_2_1 + N_2_2) = 
+  = <tabelle T1> = M_1_1 * N_1_1 + M_1_2 * N_2_1 = O_1_1  ==> ok
+  
+<T1>   N_1_1   N_1_2   N_2_1   N_2_2 
+M_1_1 <+...>   ....    ....    +.-.   
+M_1_2  ....    ....   <...+>   ..-+     
+M_2_1  ....    ....    ....    ....     
+M_2_2  +-..    ....    .+.-    +..-            
+  
+ 
+ H_3 + H_5 = 
+  = M_1_1 * (N_1_2 - N_2_2) + 
+  + (M_1_1 + M_1_2) * N_2_2 = 
+  = <tabelle T2> = M_1_1 * N_1_2 + M_1_2 * N_2_2 = O_1_2  ==> ok
+<T2>   N_1_1   N_1_2   N_2_1   N_2_2 
+M_1_1  ..     <+.>     ..      -+     
+M_1_2  ..      ..      ..     <.+>      
+M_2_1  ..      ..      ..      ..       
+M_2_2  ..      ..      ..      ..              
+
+ H_2 + H_4 =
+ = (M_2_1 + M_2_2) * N_1_1 + 
+ + (M_2_2) * (N_2_1 - N_1_1) = 
+ = <tabelle T3> = M_2_1 * N_1_1 + M_2_2 * N_2_1 = O_2_1  ==> ok
+
+<T3>   N_1_1   N_1_2   N_2_1   N_2_2 
+M_1_1  ..      ..      ..      ..     
+M_1_2  ..      ..      ..      ..       
+M_2_1 <+.>     ..      ..      ..       
+M_2_2  +-      ..     <.+>     ..              
+
+ H_1 - H_2 + H_3 + H_6 = 
+ = (M_1_1 + M_2_2) * (N_1_1 + N_2_2) -
+ - (M_2_1 + M_2_2) * N_1_1 + 
+ + M_1_1 * (N_1_2 - N_2_2) + 
+ + (M_2_1 - M_1_1) * (N_1_1 + N_1_2)
+ = <tabelle T4> = M_2_1 * N_1_2 + M_2_2 * N_2_2  ==> ok
+<T2>   N_1_1   N_1_2   N_2_1   N_2_2 
+M_1_1  +..-    ..+-    ....    +.-.   
+M_1_2  ....    ....    ....    ....     
+M_2_1  .-.+   <...+>   ....    ....     
+M_2_2  +-..    ....    ....   <+...>      
+     
+
+---------------------------------------------------------------------------------------------------
+Laufzeit Variante 1: 
+T(2) = 12   //4*2 Multiplikationen und 4 Additionen. Lesen und Schreiben unberücksichtigt. 
+T(n) = T(2^i) = 4 * (2 * T(2^(i-1)) + 1) = 8 * T(2^(i-1)) + 4 = 
+  = 8^j * T(2^(i-j)) + 4*Summe(k=0 bis j-1)(8^k) =    || für j = i-1
+  = 8^(i-1) * T(2^1) + 4*Summe(k=0 bis i-2)(8^k) = 
+  = 8^(i-1) * 12 + 4 * (8^(i-1)/7) = Theta (8^i) = Theta((2^3)^i) = Theta((2^i)^3) = Theta(n^3)
+  
+==> Dieses Verfahren bietet keine Komplexitätsvorteile gegenüber dem Standardmatrixmultiplikationsverfahren. 
+
+Laufzeit Variante 2: 
+T(2) = 25   //7 Multiplikationen und 18 Additionen. Lesen und Schreiben unberücksichtigt. 
+T(n) = T(2^i) = 7 * T(2^(i-1)) + 18 = 
+  = 7^j * T(2^(i-j)) + 18*Summe(k=0 bis j-1)(7^k) = 
+  = 7^(i-1) * T(2^1) + 18 * (7^(i-1)/6) = Theta (7^i) = Theta(n^(lb(7))) = Theta(n^2.8)
+
+==> Kleiner Laufzeitgewinn für riesige Matrizen  
+
+
+---------------------------------------------------------------------------------------------------
+Algorithmen und Datenstrukturen Blatt 5 Aufgabe 3 Teil 1: 
+Behauptung: Ein Heap mit n Elementen hat die Höhe b := trunc(lb(n))
+Ein Heap mit genau einem Element hat die Höhe 0. 
+Beweis: 
+2^b <= n < 2^(b+1), weil 2^b = 2^trunc(lb(n)) <= 2^lb(n) = n und 2^(b+1) = 2^(trunc+1)(lb(n)) > 2^lb(n) = n
+=> (I.) 2^b - 1 < n <= 2^(b+1) - 1, weil alles natürliche Zahlen sind. 
+
+(II.) Ein gefüllter Binärbaum der Höhe b hat 1+2+4+...+2^b = 2^(b+1) - 1 Elemente. 
+=> (III.) Ein gefüllter Binärbaum der Höhe b-1 hat 2^b -1 Elemente. 
+
+Ein Heap mit n Elementen muss wegen (I. und II.) mindestens die Höhe b haben und 
+ein Heap mit n Elementen darf wegen (I. und III.) höchstens die Höhe b haben. 
+
+---------------------------------------------------------------------------------------------------
+Algorithmen und Datenstrukturen Blatt 5 Aufgabe 3 Teil 2: 
+Behauptung: Ein Heap mit n Elementen hat höchstens d(h) := aufrunden(n/2^(h+1)) viele Knoten der Höhe h
+
+Beweis durch vollständige Induktion nach h 
+Induktionsanfang h = b := trunc(log n)
+ Der Bruch ist eine positive Zahl durch eine positive Zahl, dies aufgerundet ist mindestens 1. 
+ Ein Heap hat höchstens einen Wurzelknoten ist korrekt. ==> ok 
+Induktionsschritt h -> h + 1 
+ Ein Heap hat gar keinen Knoten über der Wurzel und damit ist "höchstens einer" korrekt. ==> ok
+Induktionsschritt h + 1 -> h
+ Angenommen falsch, d.h. es gäbe einen Heap mit n Elementen mit mehr als d(h) Knoten der Höhe h. 
+ Mindestens die Hälfte dieser Knoten muss ein linker Kindknoten sein, weil ein Heap ein linksvoller Binärbaum ist. 
+ Die Elternknoten zu diesen Knoten sind paarweise verschieden (weil "linker Kindknoten" ist eindeutig) und haben immer exakt die Höhe h + 1. 
+ Es gibt also mehr als d(h) / 2 Knoten der Höhe h + 1. 
+ d(h) / 2 = aufrunden(n / 2^(h + 1)) / 2 >= aufrunden(n / 2^(h+1) /2) = aufrunden(n / 2^(h + 2)) = d(h+1)
+ Es gibt also mehr als d(h+1) Knoten der Höhe h + 1. Die Induktionsvoraussetzung behauptet aber das Gegenteil.
+ ==> Annahme falsch. ==> Induktionsschritt ok. 
+ 
+---------------------------------------------------------------------------------------------------
+Algorithmen und Datenstrukturen Blatt 5 Aufgabe 3 Teil 3: 
+Geometrische Reihe: Summe(k=0...infty) x^k = 1/(1-x)
+Ableitung: Summe(k=0...infty) k * x^(k-1) = +(1-x)^(-2)
+mal x: Summe(k=0...infty) k * x^k = x / (1-x)^2
+
+---------------------------------------------------------------------------------------------------
+Algorithmen und Datenstrukturen Blatt 5 Aufgabe 3 Teil 4: 
+Die Reihenfolge kann nicht verändert werden. Fängt man vorne an, könnte das globale Maximum nur eine Stufe aufsteigen. 

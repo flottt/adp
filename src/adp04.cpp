@@ -5,6 +5,8 @@
 #include <iomanip>
 #include <time.h>
 
+#include "adpHelper.h"
+
 void swop(int * a, const int x1, const int x2);
 void initArrayRandom(int * a, const int n, const int minValue, const int maxValue);
 void printArray(const int * a, const int n); 
@@ -27,17 +29,6 @@ void kopiereBand(int ** bandSrc, int * bandSrcEnde, int ** zielBand);
 void mergeSort(int * a, int n);
 int adp04_4_main();
 
-
-/** vertauscht im Array a die Werte an Index x1 und x2. 
- * @param int * a Array, dessen Werte vertauscht werden sollen. 
- * @param const int x1 erster Index im Array zum Tauschen. 
- * @param const int x2 zweiter Index im Array zum Tauschen. */
-void swop(int * a, const int x1, const int x2) {
-	int s = a[x1]; 
-	a[x1] = a[x2]; 
-	a[x2] = s; 
-}
-
 /** setzt im Array a Zufallswerte zwischen minValue und maxValue 
  * @param int * a Array, dessen Werte randomisiert werden sollen. 
  * @param const int n Groesse des Arrays a bzw. Anzahl an zu setzenden Werten. 
@@ -49,22 +40,6 @@ void initArrayRandom(int * a, const int n, const int minValue = 0, const int max
 	for (int i = n - 1; i >= 0; --i) {
 		a[i] = rand() % rangeValue + minValue; 
 	}
-}
-
-/** schreibt den Inhalt des Arrays a auf den Bildschirm. 
- * @param const int * a zu druckendes Array. 
- * @param const int n */
-void printArray(const int * a, const int n) {
-	std::ostringstream result; 
-
-	for (int i = 0; i < n; ++i, ++a) {
-		result << "[" << std::setw(3) << i << "] = " << std::setw(3) << *a << "     "; 
-		if (i % 10 == 9) {
-			result << std::endl; 
-		}
-	}
-	result << std::endl;
-	std::cout << result.str();
 }
 
 /** Aufgabe 1.1: InsertionSort */

@@ -18,6 +18,9 @@ extern int adp04_2_main();
 extern int adp04_3_main();
 extern int adp04_4_main();
 
+extern int adp05_1_main();
+extern int adp05_4_main();
+
 int main() {
 	int eingabe = -1, returnresult = -1;
 	printf("Hauptmenue \n"); 
@@ -39,6 +42,9 @@ int main() {
 	printf("42: Blatt 4. Aufgabe 2. Summenwert mit 2 aus n Zahlen suchen \n");
 	printf("43: Blatt 4. Aufgabe 3. Zeitmessung Sortieralgorithmen \n");
 	printf("44: Blatt 4. Aufgabe 4. Iteratives Mergesort \n");
+	
+	printf("51: Blatt 5. Aufgabe 1. Analyse MergeSort und HeapSort \n");
+	printf("54: Blatt 5. Aufgabe 4. CountSort \n");
 
 	printf("Ihre Eingabe: "); 
 	scanf_s("%i", &eingabe); 
@@ -64,6 +70,9 @@ int main() {
 	case 42: returnresult = adp04_2_main(); break;
 	case 43: returnresult = adp04_3_main(); break;
 	case 44: returnresult = adp04_4_main(); break;
+
+	case 51: returnresult = adp05_1_main(); break;
+	case 54: returnresult = adp05_4_main(); break;
 	}
 
 	system("pause"); 
