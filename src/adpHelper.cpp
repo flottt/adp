@@ -2,6 +2,23 @@
 #include <iomanip>
 #include <sstream>
 
+void initRandomizer() {
+	std::srand(static_cast<unsigned>(std::time(nullptr)));
+}
+
+/** setzt im Array a Zufallswerte zwischen minValue und maxValue
+* @param int * a Array, dessen Werte randomisiert werden sollen.
+* @param const int n Groesse des Arrays a bzw. Anzahl an zu setzenden Werten.
+* @param const int minValue = 0 Der kleinste erlaubte Wert. Darf auch negativ sein.
+* @param const int maxValue = 100 Der groesste erlaubte Wert. Darf auch negativ sein. Muss mindestens minValue sein. */
+void initArrayRandom(int * a, const int n, const int minValue = 0, const int maxValue = 100) {
+	initRandomizer();
+	int rangeValue = maxValue - minValue;
+	for (int i = n - 1; i >= 0; --i) {
+		a[i] = rand() % rangeValue + minValue;
+	}
+}
+
 /** vertauscht im Array a die Werte an Index x1 und x2.
 * @param int * a Array, dessen Werte vertauscht werden sollen.
 * @param const int x1 erster Index im Array zum Tauschen.

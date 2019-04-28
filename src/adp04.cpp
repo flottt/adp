@@ -8,7 +8,7 @@
 #include "adpHelper.h"
 
 void swop(int * a, const int x1, const int x2);
-void initArrayRandom(int * a, const int n, const int minValue, const int maxValue);
+extern void initArrayRandom(int * a, const int n, const int minValue, const int maxValue);
 void printArray(const int * a, const int n); 
 void insertionSortMin(int * a, int n); 
 void bubbleSortMax(int * a, int n); 
@@ -28,19 +28,6 @@ void insertionSortRek(int * a, int n);
 void kopiereBand(int ** bandSrc, int * bandSrcEnde, int ** zielBand);
 void mergeSort(int * a, int n);
 int adp04_4_main();
-
-/** setzt im Array a Zufallswerte zwischen minValue und maxValue 
- * @param int * a Array, dessen Werte randomisiert werden sollen. 
- * @param const int n Groesse des Arrays a bzw. Anzahl an zu setzenden Werten. 
- * @param const int minValue = 0 Der kleinste erlaubte Wert. Darf auch negativ sein. 
- * @param const int maxValue = 100 Der groesste erlaubte Wert. Darf auch negativ sein. Muss mindestens minValue sein. */
-void initArrayRandom(int * a, const int n, const int minValue = 0, const int maxValue = 100) {
-	int rangeValue = maxValue - minValue; 
-	std::srand(static_cast<unsigned>(std::time(nullptr)));
-	for (int i = n - 1; i >= 0; --i) {
-		a[i] = rand() % rangeValue + minValue; 
-	}
-}
 
 /** Aufgabe 1.1: InsertionSort */
 void insertionSortMin(int * a, int n) {
