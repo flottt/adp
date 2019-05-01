@@ -1,5 +1,7 @@
 #include <iostream>
 #include <iomanip>
+#include <random>
+#include "adpHelper.h"
 #include "AdpAvlTree.h"
 
 int adp07_1_main(void) {
@@ -66,24 +68,17 @@ int countMinAVLTrees(int hoehe) {
 }
 
 /** Zaehlt die Anzahl der Knoten eines AVL-Baums der Hoehe hoehe */
-int countMinAVLNodes(int hoehe, int * resultArray) {
+int countMinAVLNodes(const int hoehe) {
 	if (hoehe < 2) {
 		if (hoehe == 1) return 2; 
 		else if (hoehe == 0) return 1; 
 		else return 0;
 	} else {
-		if (resultArray != nullptr) {
-			resultArray[0] = 1; 
-			resultArray[1] = 2; 
-		}
 		int result_i_minus2 = 1; //hoehe 0
 		int result_i_minus1 = 2; //hoehe 1
 		int result_i; 
 		for (int i = 2; i <= hoehe; ++i) {
 			result_i = result_i_minus1 + result_i_minus2 + 1;
-			if (resultArray != nullptr) {
-				resultArray[i] = result_i;
-			}
 			//erhoehe i
 			result_i_minus2 = result_i_minus1; 
 			result_i_minus1 = result_i;
@@ -92,6 +87,11 @@ int countMinAVLNodes(int hoehe, int * resultArray) {
 	}
 }
 
+/** Erstellt einen Minimalbaum-Knoten 
+ * @param int height Gewuenschte Hoehe 
+ * @param int & zahl Laufende Zahl fuer die Knoten. Der erste Knoten bekommt zahl+1. 
+ * @param int & key Der wievielte Baum erstellt werden soll. Der Inhalt wird dabei veraendert auf 0. 
+ * @return BinAvlTreeNode<int> * Knoten, der an eine Wurzel eines neuen AVL-Baums gesetzt werden kann. */
 BinAvlTreeNode<int> * createMinTree(int height, int & zahl, int & key) {
 	if (height < 0) {
 		return nullptr; 
@@ -120,12 +120,12 @@ BinAvlTreeNode<int> * createMinTree(int height, int & zahl, int & key) {
 	}
 }
 
+/** minimale AVL-Baeume */
 int adp07_3_main(void) {
 	const int hoehe = 5; 
-	int countNodes[hoehe + 1];
 	int countTrees = countMinAVLTrees(hoehe); 
-	countMinAVLNodes(hoehe, countNodes);
-	std::cout << "Es gibt " << countTrees << " minimale AVL-Baeume der Hoehe " << hoehe << " und dieser hat " << countNodes[hoehe] << " Knoten. " << std::endl;
+	int countNodes = countMinAVLNodes(hoehe);
+	std::cout << "Es gibt " << countTrees << " minimale AVL-Baeume der Hoehe " << hoehe << " und dieser hat " << countNodes << " Knoten. " << std::endl;
 	for (int treeIndex = 0; treeIndex < countTrees; ++treeIndex) {
 		std::cout << "Baum #" << std::setw(5) << (treeIndex + 1) << ": "; 
 		int zahl = 0; 
@@ -137,3 +137,14 @@ int adp07_3_main(void) {
 	return 0;
 }
 // Ergebnis: Es gibt 4096 minimale AVL-Baeume der Hoehe 5
+
+/** Mit AVL Baeumen sortieren */
+int adp07_4_main(void) {
+	initRandomizer();
+	AvlTree<int> baum; 
+	for (int i = 0; i < 10000; ++i) {
+		baum.add(rand() % 100000);
+	}
+	baum.printInOrderRecursive(std::cout);
+	return 0; 
+}

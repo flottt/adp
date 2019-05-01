@@ -30,6 +30,7 @@ extern int adp06_4_main(void);
 extern int adp07_1_main(void);
 extern int adp07_2_main(void);
 extern int adp07_3_main(void);
+extern int adp07_4_main(void);
 
 int main() {
 	int eingabe = -1, returnresult = -1;
@@ -65,6 +66,7 @@ int main() {
 		printf("71: Blatt 7. Aufgabe 1. Binaerbaum mit Pre- und Inorder \n");
 		printf("72: Blatt 7. Aufgabe 2. AVL-Baum \n");
 		printf("73: Blatt 7. Aufgabe 3. Minimale AVL-Baeume zaehlen \n");
+		printf("74: Blatt 7. Aufgabe 4. AVL Sort \n");
 
 		printf("Ihre Eingabe: ");
 		scanf_s("%i", &eingabe);
@@ -102,6 +104,7 @@ int main() {
 		case 71: returnresult = adp07_1_main(); break;
 		case 72: returnresult = adp07_2_main(); break;
 		case 73: returnresult = adp07_3_main(); break;
+		case 74: returnresult = adp07_4_main(); break;
 		}
 
 	} catch (std::exception err) {
