@@ -7,11 +7,11 @@
 /** A search tree for primitive (--> no delete) and unique (--> overwrites duplicates) Objects */
 template <typename T>
 class SuchTreeSingle : public BinTree<T> {
-private:
+protected:
 	BinTreeNode<T> * find(T x);
 public:
 	void add(T x); 
-	void remove(T x); 
+	BinTreeNode<T> * remove(T x); 
 };
 
 
@@ -37,12 +37,11 @@ inline BinTreeNode<T> * SuchTreeSingle<T>::find(T x) {
 
 template<typename T>
 inline void SuchTreeSingle<T>::add(T x) {
-	BinTreeNode<T> * aktNode = nullptr; 
 	if (this->root == nullptr) {
 		BinTreeNode<T> * newNode = new BinTreeNode<T>(x);
 		this->root = newNode; 
 	} else {
-		aktNode = this->find(x); 
+		BinTreeNode<T> * aktNode = this->find(x); 
 		if (aktNode->o == x) {
 			if (_TREE_DEBUG) std::cout << "overwriting " << x << " into node " << aktNode->o << std::endl;
 			aktNode->o = x; 
@@ -52,12 +51,10 @@ inline void SuchTreeSingle<T>::add(T x) {
 			newNode->glueTo(*aktNode, (x < aktNode->o)); 
 		}
 	}
-
-
 }
 
 template<typename T>
-inline void SuchTreeSingle<T>::remove(T x) {
+inline BinTreeNode<T> * SuchTreeSingle<T>::remove(T x) {
 	BinTreeNode<T> * deleteNode = this->find(x);
 	BinTreeNode<T> * parentNode = nullptr, * childNode = nullptr;
 	bool wasLeftNode = false; 
@@ -67,8 +64,10 @@ inline void SuchTreeSingle<T>::remove(T x) {
 			if (deleteNode->right == nullptr) {
 				//(---, [x], ---)
 				if (_TREE_DEBUG) std::cout << "removing leaf " << x << std::endl;
+				parentNode = deleteNode->top; 
 				this->cutNodeTop(*deleteNode);
 				delete deleteNode;
+				return parentNode; 
 			} else {
 				//(---, [x], r)
 				if (_TREE_DEBUG) std::cout << "shorting right branch " << x << std::endl;
@@ -78,6 +77,7 @@ inline void SuchTreeSingle<T>::remove(T x) {
 				childNode = deleteNode->right; 
 				childNode->glueTo(*parentNode, wasLeftNode); 
 				delete deleteNode; 
+				return parentNode;
 			}
 		}	else {
 			if (deleteNode->right == nullptr) {
@@ -88,7 +88,8 @@ inline void SuchTreeSingle<T>::remove(T x) {
 				this->cutNodeTop(*deleteNode);
 				childNode = deleteNode->left;
 				childNode->glueTo(*parentNode, wasLeftNode); 
-				delete deleteNode; 
+				delete deleteNode;
+				return parentNode;
 			} else {
 				//(l, [x], r) 
 				childNode = deleteNode->left; 
@@ -98,20 +99,25 @@ inline void SuchTreeSingle<T>::remove(T x) {
 				deleteNode->o = childNode->o; 
 				if (childNode->left == nullptr) {
 					if (_TREE_DEBUG) std::cout << "moving leaf " << childNode->o << " up into node " << x << std::endl;
+					parentNode = childNode->top;
 					this->cutNodeTop(*childNode); 
 					delete childNode; 
+					return parentNode; 
 				} else {
 					parentNode = childNode->top; 
 					wasLeftNode = childNode->isLeftNode();
 					if (_TREE_DEBUG) std::cout << "moving branch " << childNode->o << " up into node " << x << std::endl;
 					this->cutNodeTop(*childNode); 
 					childNode->left->glueTo(*parentNode, wasLeftNode);
+					//parentNode = childNode->top;
 					delete childNode; 
+					return parentNode; 
 				}
 			}
 		}	
 	} else if (_TREE_DEBUG) {
 		std::cout << "could not find " << x << " --> no delete" << std::endl;
+		return nullptr;
 	}
 }
 

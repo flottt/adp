@@ -27,10 +27,11 @@ public:
 
 public: 
 	BinTree(); 
+	BinTree(T * preOrder, T * inOrder, int anzahl); 
 	~BinTree();
 
 	BinTreeNode<T> & cutNodeTop(BinTreeNode<T> & node); 
-	void printInOrderRecursive(std::ostream & out) { this->root->printInOrderRecursive(out); out << std::endl;  }
+	void printInOrderRecursive(std::ostream & out);
 }; //end class BinTree
 
 
@@ -44,7 +45,7 @@ BinTreeNode<T>::~BinTreeNode() {
 		BinTreeNode<T> *node = this->getMostDownLeft();
 		BinTreeNode<T> *topNode = node->top;
 
-		while (node != this) {
+		while (node != this && node != nullptr) {
 			topNode = node->top;
 			if (topNode == nullptr) {
 			} else if (node->isLeftNode()) {
@@ -123,6 +124,66 @@ inline bool BinTreeNode<T>::isLeftNode() {
 template<typename T>
 BinTree<T>::BinTree() : root(nullptr) {
 }
+
+template<typename T>
+inline BinTree<T>::BinTree(T * preOrder, T * inOrder, int anzahl) : root(nullptr) {
+	bool left = true; 
+	BinTreeNode<T> * node, *node2 = nullptr; 
+	if (anzahl > 0) {
+		this->root = node = new BinTreeNode<T>(*preOrder); 
+		--anzahl; 
+		++preOrder; 
+	}
+	while (anzahl > 0) {
+		while (*inOrder != node->o) {
+			node2 = new BinTreeNode<T>(*preOrder); 
+			if (node->left == nullptr && left) {
+				node->left = node2; 
+			} else {
+				node->right = node2; 
+			}
+			node2->top = node; 
+			node = node2; 
+			--anzahl; 
+			++preOrder; 
+			left = true; 
+			if (anzahl <= 0) {
+				return; 
+			}
+		}
+		left = false;
+		++inOrder; 
+		while (*inOrder != *preOrder) {
+			while (node->o != *inOrder) {
+				node = node->top;
+				if (node == nullptr) {
+					throw "Illegal Tree";
+				}
+			}
+			++inOrder;
+		}
+		//now *inOrder == *preOrder
+		node2 = new BinTreeNode<T>(*preOrder); 
+		node->right = node2; 
+		node2->top = node; 
+		node = node2; 
+		--anzahl; 
+		++preOrder; 
+		++inOrder;
+		if (anzahl <= 0) {
+			return; 
+		}
+		//node2 = node; 
+		while (node2 != nullptr) {
+			node2 = node2->top; 
+			if (node2 != nullptr && node2->o == *inOrder) {
+				++inOrder; 
+				node = node2; 
+			}
+		}
+	}
+}
+
 template<typename T>
 inline BinTree<T>::~BinTree() {
 	delete root;
@@ -140,5 +201,13 @@ BinTreeNode<T> & BinTree<T>::cutNodeTop(BinTreeNode<T> & node) {
 		node.top = nullptr;
 	}
 	return node;
+}
+template<typename T>
+void BinTree<T>::printInOrderRecursive(std::ostream & out) {
+	if (this->root == nullptr) {
+		out << "---" << std::endl;
+	} else {
+		this->root->printInOrderRecursive(out); out << std::endl; 
+	}
 }
 #endif // !__ADP_BIN_TREE__H__
