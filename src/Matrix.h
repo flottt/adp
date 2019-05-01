@@ -4,6 +4,10 @@
 #include <iostream>
 #include <sstream>
 #include <exception>
+#include <iomanip>
+
+#include "adpHelper.h"
+#include "MatrixMultipliziererInterface.h"
 
 template <typename T>
 class Matrix {
@@ -17,10 +21,12 @@ public:
 	Matrix<T>(const Matrix<T> &);
 	~Matrix<T>();
 	Matrix<T> & init();
-		Matrix<T> & print();
+	Matrix<T> & initRandom(T minValue = 0, T maxValue = 100);
+	Matrix<T> & print();
 	Matrix<T> & input();
 	Matrix<T> add(const Matrix<T> & that) { return *this + that; }
 	Matrix<T> & mult(const Matrix<T> & factor, Matrix<T> & result); 
+	Matrix<T> & quickmult(const Matrix<T> & factor, Matrix<T> & result); 
 	Matrix<T> & operator+= (const Matrix<T> & that); 
 	Matrix<T> operator+ (const Matrix<T> & that); 
 	Matrix<T> & setValue(int line_startWith0, int column_startWith0, T value); 
@@ -63,14 +69,29 @@ Matrix<T> & Matrix<T>::init() {
 	return *this;
 }
 
+template<typename T>
+inline Matrix<T>& Matrix<T>::initRandom(T minValue, T maxValue) {
+	initRandomizer();
+	int sizeZSm1 = this->ZEILEN * this->SPALTEN - 1; 
+	T * x = data + sizeZSm1;
+	int range = static_cast<int>(maxValue - minValue); 
+	for (int i = sizeZSm1; i >= 0; --i, --x) {
+		*x = static_cast<T>(rand() % range + minValue);
+	}
+	return *this;
+}
+
 template <typename T>
 Matrix<T> & Matrix<T>::print() {
+	const int width = 7; 
+	std::ostringstream result; 
 	for (int i = 0; i < this->ZEILEN; i++) {
 		for (int j = 0; j < this->SPALTEN; j++) {
-			std::cout << this->data[i * this->SPALTEN + j] << "  ";
+			result << std::setw(width) << this->data[i * this->SPALTEN + j] << "  ";
 		}
-		std::cout << std::endl;
+		result << std::endl;
 	}
+	std::cout << result.str();
 	return *this;
 }
 
@@ -149,6 +170,21 @@ Matrix<T> & Matrix<T>::mult(const Matrix<T> & factor, Matrix<T> & result) {
 	
   Matrix<T>::instructioncounter++;
 	return result;
+}
+
+template<typename T>
+inline Matrix<T>& Matrix<T>::quickmult(const Matrix<T>& factor, Matrix<T>& result) {
+	if (this->ZEILEN == this->SPALTEN && factor.ZEILEN == factor.SPALTEN && result.ZEILEN == result.SPALTEN && result.ZEILEN == this->ZEILEN && result.ZEILEN == factor.ZEILEN && result.ZEILEN % 2 == 0) {
+		MatrixMultipliziererInterface * mquickmult = MatrixMultipliziererInterface::getInstance(this->ZEILEN); 
+		mquickmult->setPtrMatrix(MMULT_INDEX__A, this->data, this->ZEILEN); 
+		mquickmult->setPtrMatrix(MMULT_INDEX__B, factor.data, this->ZEILEN); 
+		mquickmult->executeMultiplication(); 
+		mquickmult->setTo(MMULT_INDEX_RESULT, result.data, this->ZEILEN); 
+
+		delete mquickmult;
+	}
+	return result;
+	// TODO: hier Rückgabeanweisung eingeben
 }
 
 template <typename T>

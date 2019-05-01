@@ -24,6 +24,7 @@ extern int adp05_4_main();
 extern int adp06_1_main(void);
 extern int adp06_2_main(void);
 extern int adp06_3_main(void);
+extern int adp06_4_main(void);
 
 int main() {
 	int eingabe = -1, returnresult = -1;
@@ -53,6 +54,7 @@ int main() {
 	printf("61: Blatt 6. Aufgabe 1. Quicksort in linklist \n");
 	printf("62: Blatt 6. Aufgabe 2. Lotterie mit ringlist \n");
 	printf("63: Blatt 6. Aufgabe 3. Binaerer Suchbaum \n");
+	printf("64: Blatt 6. Aufgabe 4. Schnelle Matrixmultiplikation \n");
 
 	printf("Ihre Eingabe: "); 
 	scanf_s("%i", &eingabe); 
@@ -85,6 +87,7 @@ int main() {
 	case 61: returnresult = adp06_1_main(); break;
 	case 62: returnresult = adp06_2_main(); break;
 	case 63: returnresult = adp06_3_main(); break;
+	case 64: returnresult = adp06_4_main(); break;
 	}
 
 	system("pause"); 
