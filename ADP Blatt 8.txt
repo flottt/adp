@@ -1,0 +1,64 @@
+Algorithmen und Datenstrukturen Blatt 8 Aufgabe 1:
+1.1 Aussage ist WAHR: 
+	Wenn der rechte Nachfolger-Knoten existiert, erhält man den Inorder-Nachfolger, indem man vom rechten Nachfolger-Knoten solange nach links geht, bis es nicht mehr nach links geht. 
+	Wenn es aber nicht mehr nach links geht, kann es nur noch maximal einen Nachfolger geben. 
+	
+1.2 Aussage ist FALSCH: 
+	Gegenbeispiel: Entferne 1 und 4 aus dem Baum (1, 2, (-, 3, 4)) 
+	-> Erst 1 löschen: ==> (-, 2, (-, 3, 4)) ist kein AVL-Baum mehr => Linksrotation => (2, 3, 4)
+	==> Dann 4 löschen: ==> (2, 3, -)
+	
+	-> Erst 4 löschen: ==> (1, 2, 3)
+	==> Dann 1 löschen: ==> (-, 2, 3)
+	
+	===> Ergebnisse ungleich (Wurzel ungleich)
+
+Algorithmen und Datenstrukturen Blatt 8 Aufgabe 2:
+2.1 Ein voll balancierter Baum der Hoehe 4 ist ein minimaler RS-Baum der Schwarzhoehe 4. Alle Knoten schwarz. 
+2.2 Für jeden Knoten gilt: 
+	Jeder Pfad zu einem RS-Blatt (also auch der kürzeste Pfad) ist mindestens so lange wie seine Schwarzhoehe (wegen Definition von Schwarzhoehe). 
+	Die Höhe des Knotens ist also mindestens dessen Schwarzhoehe. 
+	Jeder Pfad zu einem RS-Blatt (also auch der längste Pfad) ist hoechstens doppelt so lange wie seine Schwarzhoehe (denn nach jedem schwarzen Knoten (der ja in der Schwarzhoehe gezählt wird) kann es höchstens einen zusätzlichen (roten) Knoten geben). 
+	Die Höhe des Knotens ist also hoechstens dessen doppelte Schwarzhoehe. 
+	
+	Für jeden Knoten k gilt also: 
+	bh(k) <= kuerzester Pfad(k) <= laengster Pfad(k) <= 2*bh(k) 
+	==> laengster Pfad(k) <= 2*bh(k) <= 2* kuerzester Pfad(k)
+	
+Algorithmen und Datenstrukturen Blatt 8 Aufgabe 3:	
+<10, 11, 13, 16>
+(<10, 11>, 13, <16, 24>)
+(<4, 10, 11, 12>, 13, <16, 24>)
+(<2, 4>, 10, <11, 12>, 13, <16, 24>)
+(<2, 4>, 10, <11, 12>, 13, <15, 16, 18, 24>)
+(<2, 4>, 10, <11, 12>, 13, <15, 16>, 18, <22, 24>)
+(<1, 2, 4, 7>, 10, <11, 12>, 13, <14, 15, 16, 17>, 18, <22, 24, 25, 26>)
+(<1, 2>, 3, <4, 7>, 10, <11, 12>, 13, <14, 15, 16, 17>, 18, <22, 24, 25, 26>)
+((<1, 2>, 3, <4, 7>, 10, <11, 12>), 13, (<14, 15, 16, 17>, 18, <21, 22>, 24, <25, 26>))
+((<1, 2>, 3, <4, 5, 7, 8>, 10, <11, 12>), 13, (<14, 15, 16, 17>, 18, <19, 21, 22, 23>, 24, <25, 26>))
+((<1, 2>, 3, <4, 5>, 6, <7, 8, 9>, 10, <11, 12>), 13, (<14, 15, 16, 17>, 18, <19, 20>, 21, <22, 23>, 24, <25, 26>))
+
+Inorder-Nachfolger zu x ist x+1.
+
+Algorithmen und Datenstrukturen Blatt 8 Aufgabe 4:
+((<1, 2>, 3, <4, 5>, 6, <7, 8, 9>, 10, <11, 12>), 13, (<14, 15, 16, 17>, 18, <19, 20>, 21, <22, 23, 24, 25>))
+((<1, 2>, 3, <4, 5>, 6, <7, 8, 9>, 10, <11, 12>), 13, (<14, 15, 16, 17>, 18, <19, 20>, 21, <22, 23>))
+((<1, 2>, 3, <4, 5>, 6, <7, 8, 9>, 10, <11, 12>), 13, (<14, 15, 16, 17>, 18, <19, 20, 21, 22>)) // ERR!
+((<1, 2>, 3, <4, 5>, 6, <7, 8, 9>), 10, (<11, 12>, 13, <14, 15, 16, 17>, 18, <19, 20, 21, 22>))
+((<1, 2>, 3, <4, 5>, 6, <7, 8, 9>), 10, (<11, 12>, 13, <14, 15, 16, 17>, 18, <19, 20>))
+((<1, 2>, 3, <4, 5>, 6, <7, 8, 9>), 10, (<11, 12>, 13, <14, 15, 16>, 17, <18, 19>))
+((<1, 2>, 3, <4, 5>, 6, <7, 8, 9>), 10, (<11, 12>, 13, <14, 15>, 16, <17, 18>))
+(<1, 2>, 3, <4, 5>, 6, <7, 8, 9>, 10, <11, 12>, 13, <14, 15, 16, 17>)
+(<1, 2>, 3, <4, 5>, 6, <7, 8, 9>, 10, <11, 12>, 13, <14, 15>)
+(<1, 2>, 3, <4, 5>, 6, <7, 8, 9>, 10, <11, 12, 13, 14>)
+(<1, 2>, 3, <4, 5>, 6, <7, 8, 9>, 10, <11, 12>)
+(<1, 2>, 3, <4, 5>, 6, <7, 8>, 9, <10, 11>)
+(<1, 2>, 3, <4, 5>, 6, <7, 8, 9, 10>)
+(<1, 2>, 3, <4, 5>, 6, <7, 8>)
+(<1, 2>, 3, <4, 5, 6, 7>)
+(<1, 2>, 3, <4, 5>)
+<1, 2, 3, 4>
+<1, 2>
+<1>
+-
+
