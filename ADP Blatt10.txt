@@ -1,0 +1,52 @@
+Aufgabe 10.2 NaiveSearch
+
+ALGORITHMEN UND DATENSTRUKTUREN
+--------------D-                  // 16 Vergleiche
+...............-DATEN             //  6 Vergleiche, 1 Erfolg
+.................--------------   // 14 Vergleiche
+........................... //Summe: 36 Vergleiche, 1 Erfolg
+
+-------------------------------------------------------------------------------------------------------------
+
+Aufgabe 10.2 BoyerMooreSearch 
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z * 
+3 5 5 4 1 5 5 5 5 5 5 5 5 0 5 5 5 5 5 2 5 5 5 5 5 5 5  
+ALGORITHMEN UND DATENSTRUKTUREN
+''''5                             //  1 Vergleich
+.....''''1                        //  1 Vergleich
+......'''10                       //  2 Vergleiche 
+.......''''5                      //  1 Vergleich
+ALGORITHMEN UND DATENSTRUKTUREN  
+............''''4                 //  1 Vergleich
+................12345             //  5 Vergleiche, 1 Erfolg
+ALGORITHMEN UND DATENSTRUKTUREN  
+.................''''5            //  1 Vergleich
+......................''''2       //  1 Vergleich
+ALGORITHMEN UND DATENSTRUKTUREN  
+........................''''5     //  1 Vergleich
+..........................''510   //  3 Vergleiche
+........................... //Summe: 17 Vergleiche
+
+-------------------------------------------------------------------------------------------------------------
+
+Aufgabe 10.3 NaiveSearch Laufzeit
+ 
+Sei b sie Anzahl an erlaubten Buchstaben. b >= 2. 
+Die Wahrscheinlichkeit, dass das erste Zeichen passt und man somit nicht direkt weitergehen kann, ist 1/b. 
+Wenn das erste Zeichen passt, gilt diese Wahrscheinlichkeit für jedes weitere Zeichen aus dem Suchmuster. 
+
+Die Laufzeit für den ersten Buchstaben ist somit geometrisch verteilt (Warten auf den ersten Erfolg, incl Erfolgsversuch) ~ Geo(1-1/b), wobei 1/2 <= 1-1/b < 1, p := 1-1/b
+Der Erwartungswert e := E(X) für X~Geo(p) ist E(X) = 1/p. 
+Hier also e = 1/p, also 1 = 1/1 < e <= 1/(1/2) = 2. 
+
+Die durchschnittliche Bearbeitungszeit für den ersten Buchstaben ist also 2. Das ist Theta(1). 
+Nach dem ersten Buchstaben wird dieser gestrichen und der zweite wird zum ersten. Wir haben also n-m Durchgänge. 
+
+Die durchschnittliche Gesamtbearbeitungszeit zum Suchen des Musters der Länge m in einem Suchstring der Länge n ist 
+t = (n-m) * 2 = Theta(n).  
+
+-------------------------------------------------------------------------------------------------------------
+
+Aufgabe 10.4 NaiveSearch 
+
+Indem man das Zurückspringen weglässt, muss im Suchstring jedes Zeichen genau einmal mit einem Zeichen aus dem Muster verglichen werden. => Laufzeit Theta(n) 
