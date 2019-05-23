@@ -39,11 +39,15 @@ private:
 public:
 	SkipListe(); 
 	~SkipListe();
-	void print(std::ostream &);
-	void printDebug(std::ostream &);
+	void print(std::ostream &) const;
+	void printDebug(std::ostream &) const;
 	void insertKey(const T &); 
-	void deleteKey(const T &); 
+	void removeKey(const T &); 
 	bool searchKey(const T &); 
+	SkipListe<T> & operator+=(const T &); 
+	SkipListe<T> & operator-=(const T &); 
+	template <typename TT>	
+	friend std::ostream & operator<<(std::ostream &, const SkipListe<TT> &); 
 };
 
 template<typename T>
@@ -128,7 +132,7 @@ SkipListe<T>::~SkipListe() {
 }
 
 template<typename T>
-void SkipListe<T>::print(std::ostream & out) {
+void SkipListe<T>::print(std::ostream & out) const {
 	myAssert(first != nullptr, "first = nullptr"); 
 	SkipListe<T>::SkipListObject<T> * ptr = first[0]; 
 	while (ptr != nullptr) {
@@ -138,7 +142,7 @@ void SkipListe<T>::print(std::ostream & out) {
 }
 
 template<typename T>
-void SkipListe<T>::printDebug(std::ostream & out) {
+void SkipListe<T>::printDebug(std::ostream & out) const {
 	myAssert(first != nullptr, "first = nullptr"); 
 	out << "Anzahl = " << this->size << std::endl;
 	out << "Turm "; 
@@ -211,7 +215,7 @@ bool SkipListe<T>::searchKey(const T & o) {
 }
 
 template<typename T>
-void SkipListe<T>::deleteKey(const T & o) {
+void SkipListe<T>::removeKey(const T & o) {
   if (this->size > 0) {
 		SkipListe<T>::SkipListObject<T> ** turm = this->searchTree(o);
 		if (turm[0] != nullptr && turm[0]->o == o) { //Element exisitert
@@ -246,8 +250,28 @@ void SkipListe<T>::deleteKey(const T & o) {
 				turm[0]->next[h] = nullptr;  
 			} //next h
 			delete turm[0]; 
+			return; 
 		} //end if Element existiert
 	}//end if size > 0
+	std::cout << "cannot delete non-existent element " << o << std::endl; 
 }
+
+template<typename T>
+SkipListe<T> & SkipListe<T>::operator+=(const T & o) {
+  this->insertKey(o);
+  return *this;
+}
+
+template<typename T>
+SkipListe<T> & SkipListe<T>::operator-=(const T & o) {
+  this->removeKey(o); 
+  return *this;
+}
+
+template <typename T>	
+std::ostream & operator<<(std::ostream & out, const SkipListe<T> & liste) {
+	liste.print(out); 
+	return out;
+} 
 
 #endif //__ADP_SKIPLISTE_HPP__
