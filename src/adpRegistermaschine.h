@@ -81,68 +81,68 @@ private:
 			switch (*c) {
 			case 'A':  //ADD
 				this->cmd = 1; 
-				this->exec = &(Registermaschine::add); 
+				this->exec = &Registermaschine::add; 
 				break; 
 			case 'S':  //SUB //STA
 				if (c[1] == 'U') {
 					this->cmd = 2; 
-					this->exec = &(Registermaschine::sub);
+					this->exec = &Registermaschine::sub;
 				} else {
 					this->cmd = 7; 
-					this->exec = &(Registermaschine::sta);
+					this->exec = &Registermaschine::sta;
 				}
 				break; 
 			case 'M':  //MUL
 				this->cmd = 3; 
-				this->exec = &(Registermaschine::mul);
+				this->exec = &Registermaschine::mul;
 				break;  //DIV
 			case 'D': 
 				this->cmd = 4; 
-				this->exec = &(Registermaschine::div); 
+				this->exec = &Registermaschine::div; 
 				break; 
 			case 'L': 
 				if (c[2] == 'A') {
 					this->cmd = 5; 
-					this->exec = &(Registermaschine::lda); 
+					this->exec = &Registermaschine::lda; 
 				} else {
 					this->cmd = 6; 
-					this->exec = &(Registermaschine::ldk); 
+					this->exec = &Registermaschine::ldk; 
 				}
 				break; 
 			case 'I':  //INP
 				this->cmd = 8; 
-				this->exec = &(Registermaschine::inp); 
+				this->exec = &Registermaschine::inp; 
 				break; 
 			case 'O':  //OUT
 				this->cmd = 9; 
-				this->exec = &(Registermaschine::out);
+				this->exec = &Registermaschine::out;
 				break;  
 			case 'H':  //HLT
 				this->cmd = 10; 
-				this->exec = &(Registermaschine::hlt);
+				this->exec = &Registermaschine::hlt;
 				break; 
 			case 'J':  //JMPs 
 				if (c[1] == 'E') { 
 					this->cmd = 12; 
-					this->exec = &(Registermaschine::jez);
+					this->exec = &Registermaschine::jez;
 				} else if (c[1] == 'N') { 
 					this->cmd = 13; 
-					this->exec = &(Registermaschine::jne);
+					this->exec = &Registermaschine::jne;
 				} else if (c[1] == 'L' && c[2] == 'Z') { 
 					this->cmd = 14; 
-					this->exec = &(Registermaschine::jlz);
+					this->exec = &Registermaschine::jlz;
 				} else if (c[1] == 'L' && c[2] == 'E') { 
 					this->cmd = 15; 
-					this->exec = &(Registermaschine::jle);
+					this->exec = &Registermaschine::jle;
 				} else if (c[1] == 'G' && c[2] == 'Z') { 
 					this->cmd = 16; 
-					this->exec = &(Registermaschine::jgz);
+					this->exec = &Registermaschine::jgz;
 				} else if (c[1] == 'G' && c[2] == 'E') {
 					this->cmd = 17;
-					this->exec = &(Registermaschine::jge);
+					this->exec = &Registermaschine::jge;
 				} else {
 					this->cmd = 11;
-					this->exec = &(Registermaschine::jmp);
+					this->exec = &Registermaschine::jmp;
 				}
 				break; 
 			} //end switch
