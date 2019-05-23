@@ -5,18 +5,26 @@
 
 #include <iostream>
 #include <stdint.h>
+#include <time.h>
 
-template<typename T>
+template <typename T>
 class SkipListe {
 public:
-	template<typename T>
+	template <typename TT>
 	struct SkipListObject {
-		T o; 
-		SkipListObject<T> ** next; 
+		TT o; 
+		SkipListObject<TT> ** next; 
 		int16_t height; 
-		SkipListObject(T o, int16_t height) : o(o), height(height), next(nullptr) {
-			next = new SkipListObject<T> *[height + 1] { nullptr };
-			next[0] = nullptr; 
+		SkipListObject(TT o, int16_t height) : o(o), height(height), next(nullptr) {
+			this->next = new SkipListObject<TT> *[height + 1] { nullptr };
+			this->next[0] = nullptr; 
+		}
+		~SkipListObject() {
+			for (int i = this->height; i >= 0; --i) {
+				this->next[i] = nullptr;
+			}
+			delete[] this->next; 
+			this->next = nullptr; 
 		}
 	}; //end struct SkipListObject
 
@@ -90,25 +98,37 @@ inline void SkipListe<T>::resetRandom() {
 		random >>= 1; 
 	}
 	this->nextRandom = result; 
+	if (result > this->maxHeight) {
+		//TODO 
+		this->nextRandom = this->maxHeight; 
+	
+	}
+	
 }
 
+/** constructor */
 template<typename T>
 SkipListe<T>::SkipListe() : size(0), nextRandom(0), first(nullptr), maxHeight(10) {
 	first = new SkipListObject<T> * [this->maxHeight + 1];
 	for (int i = this->maxHeight; i >= 0; --i) {
 		first[i] = nullptr;
 	}
-//	SkipListObject<T> oo; 
-//	oo.o = 7; 
+	srand(time(0)); 
 }
 
-
+/** destructor*/
 template<typename T>
 SkipListe<T>::~SkipListe() {
+	for (SkipListe<T>::SkipListObject<T> * ptr = first[0], * nextPtr = nullptr; ptr != nullptr; ptr = nextPtr) {
+		nextPtr = ptr->next[0]; 
+		ptr->next[0] = nullptr; 
+		delete ptr; 
+	}
+	delete[] first; 
 }
 
 template<typename T>
-void SkipListe<T>::print(std::ostream &) {
+void SkipListe<T>::print(std::ostream & out) {
 	myAssert(first != nullptr, "first = nullptr"); 
 	SkipListe<T>::SkipListObject<T> * ptr = first[0]; 
 	while (ptr != nullptr) {
@@ -141,7 +161,7 @@ void SkipListe<T>::printDebug(std::ostream & out) {
 				out << ">" << ptr->next[i]->o; 
 			}
 		}
-		out << "), ";
+		out << "), " << std::endl;
 		ptr = ptr->next[0]; 
 	}
 
@@ -149,7 +169,7 @@ void SkipListe<T>::printDebug(std::ostream & out) {
 
 template<typename T>
 void SkipListe<T>::insertKey(const T & o) {
-	if (size == 0) {
+	if (this->size == 0) {
 		first[0] = new SkipListe<T>::SkipListObject<T>(o, 0); 
 		++size;
 	} else {
@@ -190,5 +210,44 @@ bool SkipListe<T>::searchKey(const T & o) {
 	}
 }
 
+template<typename T>
+void SkipListe<T>::deleteKey(const T & o) {
+  if (this->size > 0) {
+		SkipListe<T>::SkipListObject<T> ** turm = this->searchTree(o);
+		if (turm[0] != nullptr && turm[0]->o == o) { //Element exisitert
+			//suche Element zuvor
+			int16_t h = turm[0]->height; 
+			SkipListObject<T> * vorher = nullptr, * vorherNext = nullptr; 			
+			if (h == this->maxHeight) {
+				vorher = first[h]; 
+			} else if (turm[h + 1] == nullptr) {
+				vorher = first[h]; 
+			} else {
+				vorher = turm[h + 1]; 
+			} 
+			//ganz vorn
+			for (; h >= 0 && *turm == first[h]; --h) {
+				first[h] = first[h]->next[h];
+				if (h > 0) {
+					vorher = first[h - 1]; 
+				}
+			}
+
+			//TODO ganz vorn			
+			myAssert(vorher != turm[0], "unlogischer Turm beim loeschen");
+			for (; h >= 0; --h) {
+				vorherNext = vorher; 
+				do {				
+					vorher = vorherNext; 
+					vorherNext = vorher->next[h]; 
+					myAssert(vorherNext != nullptr, "Loch in Skipliste. Missing zu loeschendes Element. ");
+				} while(vorherNext != turm[0]); 
+				vorher->next[h] = turm[0]->next[h];
+				turm[0]->next[h] = nullptr;  
+			} //next h
+			delete turm[0]; 
+		} //end if Element existiert
+	}//end if size > 0
+}
 
 #endif //__ADP_SKIPLISTE_HPP__
