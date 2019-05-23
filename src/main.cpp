@@ -34,6 +34,8 @@ extern int adp07_4_main(void);
 
 extern int adp09_3_main(void);
 
+extern int adp10_1_main(void);
+
 int main() {
 	int eingabe = -1, returnresult = -1;
 	try {
@@ -71,6 +73,8 @@ int main() {
 		printf("74: Blatt 7. Aufgabe 4. AVL Sort \n");
 
 		printf("93: Blatt 9. Aufgabe 3. Hashing \n");
+		
+		printf("101: Blatt 10. Aufgabe 1. Skiplisten \n");
 
 		printf("Ihre Eingabe: ");
 		scanf_s("%i", &eingabe);
@@ -111,6 +115,8 @@ int main() {
 		case 74: returnresult = adp07_4_main(); break;
 
 		case 93: returnresult = adp09_3_main(); break;
+
+		case 101: returnresult = adp10_1_main(); break;
 		}
 
 	} catch (std::exception err) {
