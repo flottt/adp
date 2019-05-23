@@ -121,11 +121,11 @@ int adp01_3_main() {
 
 	} catch (std::exception err) {
 		printf("ERROR \n");
-		printf(err.what());
+		printf("%s", err.what());
 		return -1;
 
 	} catch (...) {
-		printf("UNKNOWN ERROR HAPPENED \n");
+		printf("%s", "UNKNOWN ERROR HAPPENED \n");
 		return -2;
 	}
 }
@@ -157,7 +157,7 @@ int adp01_4_main() {
 		return 0;
 	} catch (std::exception err) {
 		printf("ERROR \n");
-		printf(err.what());
+		printf("%s", err.what());
 		return -1;
 
 	} catch (...) {
@@ -204,7 +204,7 @@ int matrizenmultiplizieren(int size) {
 		return 0; 
 	} catch (std::exception err) {
 		printf("ERROR \n");
-		printf(err.what());
+		printf("%s", err.what());
 		return -1;
 
 	} catch (...) {
