@@ -1,6 +1,9 @@
-#include <Windows.h>
 #include <stdio.h>
 #include <exception>
+
+#ifdef __linux__
+#define scanf_s scanf
+#endif
 
 extern int adp01_1_main(); 
 extern int adp01_2_main(); 
@@ -129,6 +132,7 @@ int main() {
 		printf("Fehler-Ende: unbekannter Fehler \n"); 
 	}
 
-	system("pause"); 
+	printf("Programmende. Beliebige Eingabe zum Beenden: "); 
+	scanf_s("%i", &eingabe); 
 	return returnresult; 
 }

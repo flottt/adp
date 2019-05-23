@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <cstring>
 #include "adpHelper.h"
 
 void mergingSortDemo(int * band1Ptr, int * band2Ptr, const int * bandEnde, int * ramPtr);

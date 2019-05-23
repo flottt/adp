@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <climits>
 
 void initRandomizer() {
 	std::srand(static_cast<unsigned>(std::time(nullptr)));

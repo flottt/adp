@@ -2,6 +2,10 @@
 #include <chrono>
 #include "Matrix.h"
 
+#ifdef __linux__
+#define scanf_s scanf
+#endif
+
 int adp01_1_main(); 
 int ggT(int a, int b); 
 int ggT_recursiv(int a, int b);
