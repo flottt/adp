@@ -1,5 +1,6 @@
 #ifndef __ADP_PRINTING_CONSOLE_HELPER__
 #define __ADP_PRINTING_CONSOLE_HELPER__
+#include <iostream> 
 
 void initRandomizer();
 void initArrayRandom(int * a, const int n, const int minValue = 0, const int maxValue = 100);

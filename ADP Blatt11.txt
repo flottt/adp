@@ -1,0 +1,76 @@
+Algorithmen und Datenstrukturen Blatt 11 Aufgabe 1 
+Zu einer Adjazenzmatrix A eines Graphen G stehen in der Matrix A^n für eine natürliche Zahl n die Anzahl der Routen von einem Startknoten zu einem Zielknoten mit genau n Schritten. 
+
+Beweis durch vollständige Induktion nach n
+Induktionsanfang n = 1: 
+ In der Adjazenzmatrix A = A^1 stehen nur nullen und einsen, je nachdem, ob es eine Route von einem Startknoten zu einem Zielknoten gibt. 
+ 
+Induktionsschritt n -> n + 1: 
+ Y := A^n gibt nach Induktionsvoraussetzung die Anzahl an Routen von einem Startknoten zu einem Zielknoten mit genau n Schritten an. 
+ X := A^(n+1) = A * A^n = A * Y
+ 
+ X_from,to = 
+  = Summe von k = 1 bis n über (A_from,k * Y_k,to) = 
+  = Summe von allen von from erreichbaren knoten k über Y_k,to = 
+  = Summe von allen von from erreichbaren knoten k über die Anzahl der Routen von k nach to mit genau n Schritten =
+  = Anzahl der Routen von from nach to mit genau n+1 Schritten
+  
+
+---------------------------------------------------------------------------------------------------
+  
+Algorithmen und Datenstrukturen Blatt 11 Aufgabe 2 
+G ist ein gerichteter Graph, weil (1, 0) in E, aber (0, 1) nicht in E. 
+
+Breitensuche: 
+0 -> 1, 2, 6 
+1 -> 3
+2 -> (0), (3), 4
+6 -> 7
+3 -> (6) 
+4 -> (0), 5, 8
+5 -> (2), (3), (4), (7) 
+7 -> (3), (8)
+8 -> (5)
+
+Ergebnis: 0, 1, 2, 6, 3, 4, 7, 5, 8
+
+Tiefensuche: 
+0 -> 1 -> 3 -> 6 -> 7 -> n3, 8 -> 5 -> 2 -> n0, n3, 4  // ... V vollständig.
+
+Ergebnis: 0, 1, 3, 6, 7, 8, 5, 2, 4
+
+
+---------------------------------------------------------------------------------------------------
+
+Algorithmen und Datenstrukturen Blatt 11 Aufgabe 3  
+
+Auf der Diagonale steht zu jedem Knoten die Anzahl an Kanten ohne Berücksichtigung der Richtung, aber Doppelpfeile werden doppelt gezählt. 
+Ausserhalb der Diagonale steht die Aufteilung mit negativem Vorzeichen. Das Minus lässt sich als Aufzählungszeichen uminterpretieren. 
+
+Beispiel: 
+BBt = 
+ 2 -2  0  0
+-2  3 -1  0
+ 0 -1  1  0
+ 0  0  0  0
+ 
+Erster Knoten hat zwei Kanten (Diagonale 2) und zwar beide zum zweiten Knoten. 
+Zweiter Knoten hat drei Kanten (Diagonale 3) und zwar zwei Kanten zum ersten Knoten und eine Kante zum dritten Knoten. 
+Dritter Knoten hat eine Kante (Diagonale 1) und zwar zum zweiten Knoten. 
+Vierter Knoten hat gar keine Kanten (Diagonale 0). 
+
+
+---------------------------------------------------------------------------------------------------
+
+Algorithmen und Datenstrukturen Blatt 11 Aufgabe 4.1 
+Zyklensuche über Tiefensuche implementiert. 
+
+Algorithmen und Datenstrukturen Blatt 11 Aufgabe 4.2 
+ -1- Mittels Tiefensuche einen Ast durchgehen, bis es nicht mehr weitergeht. 
+ -2- Letzten Knoten an das Ende des Ergebnis-Arrays stellen. Endepointer dieses Arrays eins nach links, so dass dieses Ergebnis nun fest sitzt. 
+ -3- solange obiger Ast noch existiert: 
+ -4- obigen Ast eins zurückgehen und Ast ggf vervollständigen, so dass es wieder nicht mehr weitergeht. 
+ -5- weiter bei -2-
+ -6- beliebigen neuen Knoten suchen. Falls existiert: weiter bei -1-
+ 
+Falls der Graph zyklisch ist, wird "bis es nicht mehr weitergeht" eine Endlosschleife werden. 

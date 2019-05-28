@@ -39,6 +39,8 @@ extern int adp09_3_main(void);
 
 extern int adp10_1_main(void);
 
+extern int adp11_2_main(void);
+
 int main() {
 	int eingabe = -1, returnresult = -1;
 	try {
@@ -78,7 +80,7 @@ int main() {
 		printf("93: Blatt 9. Aufgabe 3. Hashing \n");
 		
 		printf("101: Blatt 10. Aufgabe 1. Skiplisten \n");
-
+		printf("112: Blatt 11. Aufgabe 2. Graph-Tiefen- und -Breiten- und -Zyklensuche \n");
 		printf("Ihre Eingabe: ");
 		scanf_s("%i", &eingabe);
 
@@ -120,6 +122,8 @@ int main() {
 		case 93: returnresult = adp09_3_main(); break;
 
 		case 101: returnresult = adp10_1_main(); break;
+		
+		case 112: returnresult = adp11_2_main(); break;
 		}
 
 	} catch (std::exception err) {
