@@ -130,3 +130,9 @@ void printBinaryTreeLeftAligned(std::ostream & out, const int * tree, int size, 
 		}
 	}
 }
+
+void testAssertInt(int a, int b, const char * c) {
+	if (a != b) {
+		std::cerr << "Assert failed: (" << a << " == " << b << ") " << c << std::endl;
+	}
+}

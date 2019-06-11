@@ -43,6 +43,8 @@ extern int adp11_2_main(void);
 
 extern int adp12_2_main(void);
 
+extern int adp13_1_main(void);
+
 int main() {
 	int eingabe = -1, returnresult = -1;
 	try {
@@ -86,6 +88,8 @@ int main() {
 		printf("112: Blatt 11. Aufgabe 2. Graph-Tiefen- und -Breiten- und -Zyklensuche \n");
 
 		printf("122: Blatt 12. Aufgabe 2. MinHeap \n");
+		
+		printf("131: Blatt 13. Aufgabe 1 und 2. Pruefe Graphsymmetrie, Dijkstra. \n");
 
 		printf("Ihre Eingabe: ");
 		scanf_s("%i", &eingabe);
@@ -131,6 +135,8 @@ int main() {
 		
 		case 112: returnresult = adp11_2_main(); break;
 		case 122: returnresult = adp12_2_main(); break;
+		
+		case 131: returnresult = adp13_1_main(); break;
 		}
 
 	} catch (std::exception err) {

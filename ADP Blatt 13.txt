@@ -1,0 +1,20 @@
+Algorithmen und Datenstrukturen Blatt 13 Aufgabe 1 
+Annahme: Die Adjazenzlisten liegen als Iterable vor. 
+Annahme: V ist sortierbar, Indexfestellung in konstanter Zeit. 
+1. Array pos der Länge V, initialisert mit -1, speichert bereits abgearbeitete Kanten.  
+2. Foreach Knoten From 
+3. Foreach Kante k aus From's Adjazenzliste mit zweitem Knoten To
+4. Prüfe, ob in To's Adjazenzliste From vorkommt, indem 
+5. To.Adjazenzliste[pos[To]] == From sein sollte. 
+6. Falls ja, dann pos[To]++
+7. Falls nein: Durchsuche To.Adjazenzliste weiterhin. Falls Liste unsortiert => sortieren. 
+8. Falls To weiterhin nicht gefunden => return false; 
+9. Nach allen Schleifen return true; 
+
+Laufzeit bei sortierten Adjazenzlisten: Theta(|V| + |E|)
+
+
+Algorithmen und Datenstrukturen Blatt 13 Aufgabe 2 
+Dijkstra mit Stack
+
+Algorithmen und Datenstrukturen Blatt 13 Aufgabe 3 
