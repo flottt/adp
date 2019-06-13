@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <set>
+#include <climits>
 #include "adpHelper.h"
 
 /** einfacher gerichteter Graph, dessen Nodes durchlaufend nummeriert sind von 0 bis size-1. */
