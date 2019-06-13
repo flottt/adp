@@ -15,7 +15,8 @@ Laufzeit bei sortierten Adjazenzlisten: Theta(|V| + |E|)
 
 
 Algorithmen und Datenstrukturen Blatt 13 Aufgabe 2 
-Dijkstra mit Stack
+Aufgabenstellung verwendet DAG ohne Kantenbewertungen. 
+Lösung: Breitensuche = Dijkstra mit Queue
 
 Algorithmen und Datenstrukturen Blatt 13 Aufgabe 3+4 
 Excel-File "ADP Blatt13.ods"
