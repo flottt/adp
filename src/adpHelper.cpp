@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <sstream>
 #include <climits>
+#include "adpHelper.h"
 
 void initRandomizer() {
 	std::srand(static_cast<unsigned>(std::time(nullptr)));
@@ -12,7 +13,7 @@ void initRandomizer() {
 * @param const int n Groesse des Arrays a bzw. Anzahl an zu setzenden Werten.
 * @param const int minValue = 0 Der kleinste erlaubte Wert. Darf auch negativ sein.
 * @param const int maxValue = 100 Der groesste erlaubte Wert. Darf auch negativ sein. Muss mindestens minValue sein. */
-void initArrayRandom(int * a, const int n, const int minValue = 0, const int maxValue = 100) {
+void initArrayRandom(int * a, const int n, const int minValue, const int maxValue) {
 	initRandomizer();
 	int rangeValue = maxValue - minValue;
 	for (int i = n - 1; i >= 0; --i) {
@@ -64,6 +65,29 @@ void printArray(const int * a, const int n) {
 	std::cout << result.str();
 }
 
+void printMatrix(const int * a, const int size, const bool strict) {
+	std::ostringstream result; 
+	const int * zeilenende = a; 
+	for (int zeile = 0; zeile < size; ++zeile) {
+		for (zeilenende += size; a < zeilenende; ++a) {
+			if (strict) {
+				if (*a == INT_MIN) {
+					result << " MIN "; 
+				} else if (*a == INT_MAX) {
+					result << " MAX "; 
+				} else {
+					result << std::setw(4) << *a << " ";
+				}
+			} else {
+				result << std::setw(4) << *a << " ";
+			}
+		}
+		result << std::endl; 
+	}
+
+	std::cout << result.str(); 
+}
+
 int geoReihe(int b, int n) {
 	register int result = 1;
 	for (int i = 0; i <= n; ++i) result *= b;
@@ -102,7 +126,7 @@ inline int count0sFromRight(int n) {
 }
 
 
-void printBinaryTreeLeftAligned(std::ostream & out, const int * tree, int size, const char * name = nullptr) {
+void printBinaryTreeLeftAligned(std::ostream & out, const int * tree, int size, const char * name) {
 	int height = 0, depth0 = 0, right = 0, rightSize = 1, i = 0, spaces = 0, spaces0 = 0;
 	if (size <= 0) {
 		if (name != nullptr) {

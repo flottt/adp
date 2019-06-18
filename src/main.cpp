@@ -45,6 +45,9 @@ extern int adp12_2_main(void);
 
 extern int adp13_1_main(void);
 
+extern int adp14_1_main(void);
+extern int adp14_2_main(void);
+
 int main() {
 	int eingabe = -1, returnresult = -1;
 	try {
@@ -90,6 +93,9 @@ int main() {
 		printf("122: Blatt 12. Aufgabe 2. MinHeap \n");
 		
 		printf("131: Blatt 13. Aufgabe 1 und 2. Pruefe Graphsymmetrie, Dijkstra. \n");
+
+		printf("141: Blatt 14. Aufgabe 1. Floyd-Warshall. \n");
+		printf("142: Blatt 14. Aufgabe 2. Floyd-Warshall mit 4 Knoten. \n");
 
 		printf("Ihre Eingabe: ");
 		scanf_s("%i", &eingabe);
@@ -137,6 +143,9 @@ int main() {
 		case 122: returnresult = adp12_2_main(); break;
 		
 		case 131: returnresult = adp13_1_main(); break;
+
+		case 141: returnresult = adp14_1_main(); break;
+		case 142: returnresult = adp14_2_main(); break;
 		}
 
 	} catch (std::exception err) {

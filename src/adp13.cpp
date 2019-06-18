@@ -66,7 +66,7 @@ bool AdpGraph::isSymmetric() {
 }
 
 void AdpGraph::calcDijkstra(int from, std::vector<int> & to) {
-	int size = this->adjazenzListen.size(); 
+	unsigned int size = this->adjazenzListen.size(); 
 	if (size <= 0) return; 
 	int * stack = new int[size]; 
 	int * ptrNext = stack;     //erste vergebene Platz
