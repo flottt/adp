@@ -2,7 +2,17 @@
 #include <iostream>
 #include "adpHelper.h"
 
-void iniVorgaengerMatrix(int * vorgaengerMatrix, int size) {
+#define DEBUG_FLOYD_WARSHALL 1
+
+void iniVorgaengerMatrix(int * vorgaengerMatrix, const int size); 
+void floydWarshall(int * adjazenzMatrix, int * vorgaengerMatrix , const int size); 
+void printResultOfFloydWarshall(const int * adjazenzMatrix, const int * vorgaengerMatrix, const int size);
+int adp14_1_main(void); 
+int adp14_2_main(void); 
+
+/** Initialisiere die VorgaengerMatrix durch: Vorgaenger von "von a nach b" ist a. 
+  * Ein Eintrag impliziert NICHT die Existenz eines Weges. */
+void iniVorgaengerMatrix(int * vorgaengerMatrix, const int size) {
 	int index = 0, sizeQuad = size * size;
 	for (int zeile = 0; zeile < size; ++zeile) {
 		for (int spalte = 0; spalte < size; ++spalte, ++index) {
@@ -11,7 +21,11 @@ void iniVorgaengerMatrix(int * vorgaengerMatrix, int size) {
 	}
 }
 
-void floydWarshall(int * adjazenzMatrix, int * vorgaengerMatrix , int size) {
+/** Berechnet kuerzeste Wege mit dem Floyd-Warshall-Algorithmus. 
+ * @param int * adjazenzMatrix   [READ & WRITE]: Die Gewichtematrix. Ein Weg existiert genau dann, wenn dessen Gewicht nicht INT_MAX ist.  
+ * @param int * vorgaengerMatrix [READ & WRITE]: Die fuer existente Wege vorinitialiserte VorgaengerMatrix. 
+ * @param const int size Die Anzahl der Knoten. */
+void floydWarshall(int * adjazenzMatrix, int * vorgaengerMatrix , const int size) {
 	int umwegLaenge, index = 0, index1, index2; 
 	for (int knoten = 0; knoten < size; ++knoten) {
 		for (int zeile = 0; zeile < size; ++zeile) if (knoten != zeile) {
@@ -27,7 +41,9 @@ void floydWarshall(int * adjazenzMatrix, int * vorgaengerMatrix , int size) {
 						adjazenzMatrix[index] = umwegLaenge; 
 						if (vorgaengerMatrix != nullptr) {
 							vorgaengerMatrix[index] = vorgaengerMatrix[index2];
-							std::cout << "vorgaenger <" << knoten << ">[" << zeile << ", " << spalte << "] = " << vorgaengerMatrix[index] << std::endl;
+							if (DEBUG_FLOYD_WARSHALL) {
+								std::cout << "vorgaenger <" << knoten << ">[" << zeile << ", " << spalte << "] = " << vorgaengerMatrix[index] << " mit Kosten " << adjazenzMatrix[index] << std::endl;
+							}
 						}
 					}
 				}
@@ -36,6 +52,7 @@ void floydWarshall(int * adjazenzMatrix, int * vorgaengerMatrix , int size) {
 	} //next knoten
 }
 
+/** Einfache Ausgabe auf der Konsole. */
 void printResultOfFloydWarshall(const int * adjazenzMatrix, const int * vorgaengerMatrix, const int size) {
 	std::cout << "Ergebnis: " << std::endl;
 	printMatrix(adjazenzMatrix, size, true);

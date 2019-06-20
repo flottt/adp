@@ -1,0 +1,31 @@
+Algorithmen und Datenstrukturen Blatt 14 Aufgabe 3 
+HK kann in TSP eingebettet werden mit polynomialen Aufwand: 
+  Für einen Graphen G aus HK mit Knoten V und Kanten E setze 
+   - G2 = (V, V^2) den vollständigen Graphen mit allen Kanten 
+   - w: V^2 -> N0    w(a, b) = 1 falls es eine Kante zwischen a und b im Graphen G gibt, sonst |V|. 
+   - k = |V| - 1
+  Dann ist (G2, w, k) in TSP und daraus ist offenbar G wieder rekonstruierbar.  
+  
+Wenn ich also nun ein Problem mit einem Graphen aus HK lösen möchte, dann kann ich das auch mit dem entsprechenden Graphen aus TSP. 
+Also ist HP <=p TSP. 
+
+TSP ist sicher nicht schlechter als NP-vollständig, weil ein Graph nur endlich viele Kanten und Knoten besitzt. 
+Wenn HK nicht besser als NP-vollständig sei, dann ist auch TSP nicht besser als NP-vollständig, also genau NP-vollständig.   
+
+Wenn TSP in P liegt, muss auch HK in P liegen, denn der oben beschriebene Algorithmus ist nicht schlechter als polynomial. 
+
+
+---------------------------------------------------------------------------------------------------
+
+Algorithmen und Datenstrukturen Blatt 14 Aufgabe 4 
+Definiere: TRUE^n ist die Belegung aller n Variablen mit true, 
+Allgemeine Annahme: Alle Maxterme in KNF sind unique. 
+
+Interpretation 1: nur vollständige Maxterme sind in KNF zugelassen. 
+Es gibt nur einen vollständigen Maxterm, der für TRUE^n zu false führt, nämlich "alles falsch" fordern. 
+Wenn nun die Anzahl der Maxterme mind. 2 sind, ist TRUE^n eine Universallösung. Ansonsten verwende als Lösung die vollständige Erfüllung des ersten Maxterms. 
+
+Interpretation 2: partielle Maxterme sind in KNF zugelassen (partiell heißt "weniger als n Variablen in der Oder-Verknüpfung") 
+Es gibt bereits (3 aus n) = n * (n-1) * (n-2) / 6 = O(n^3) Möglichkeiten, 3-Elementige Maxterme zu bilden. 
+Ich habe also nicht die nötige Zeit, um jede Angabe soweit zu lesen, um eine Entscheidung fällen zu können. 
+==> Problem in O(n^2) nicht lösbar. 
