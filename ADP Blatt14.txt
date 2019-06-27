@@ -3,11 +3,17 @@ HK kann in TSP eingebettet werden mit polynomialen Aufwand:
   Für einen Graphen G aus HK mit Knoten V und Kanten E setze 
    - G2 = (V, V^2) den vollständigen Graphen mit allen Kanten 
    - w: V^2 -> N0    w(a, b) = 1 falls es eine Kante zwischen a und b im Graphen G gibt, sonst |V|. 
-   - k = |V| - 1
-  Dann ist (G2, w, k) in TSP und daraus ist offenbar G wieder rekonstruierbar.  
+   - k = |V|     // Rundreise hat auch die Kante von letztem Knoten zu ersten, also kein k = |V| - 1!
+  Dann ist (G2, w, k) in TSP und daraus ist offenbar G wieder rekonstruierbar.
+
+1. Fall: G enthält Hamilton-Kreis: 
+  Dann enthält G2 eine Rundreise mit Gewicht höchstens |V| - 1, sogar genau |V| - 1. 
+  
+2. Fall: G enthält keinen Hamilton-Kreis: 
+  Dann hat jede Rundreise von G2 mindestens Gewicht |V| (oder G2 hat gar keine Rundreise). 
   
 Wenn ich also nun ein Problem mit einem Graphen aus HK lösen möchte, dann kann ich das auch mit dem entsprechenden Graphen aus TSP. 
-Also ist HP <=p TSP. 
+Also ist HK <=p TSP. 
 
 TSP ist sicher nicht schlechter als NP-vollständig, weil ein Graph nur endlich viele Kanten und Knoten besitzt. 
 Wenn HK nicht besser als NP-vollständig sei, dann ist auch TSP nicht besser als NP-vollständig, also genau NP-vollständig.   
